@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - Ground
+  - Platform
+  - Enemy
+  - Projectile
+  - DeathZone
+  - Collectible
+  - Laser
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - EnemyProjectile
+  - Water
+  - UI
+  - Player
+  - Projectile
+  - Enemy
+  - Ground
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: enemy
+    uniqueID: 3218964395
+    locked: 0
+  - name: ground
+    uniqueID: 3134922309
+    locked: 0
+  - name: hole
+    uniqueID: 1376937461
+    locked: 0
+  m_RenderingLayers:
+  - Default

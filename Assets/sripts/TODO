@@ -1,0 +1,57 @@
+
+do 3.
+
+                //platforma co pojede az se na nu postavis a pak jede dlouho kolem enemy co po tobe strili
+                //nahodne generovani mapy(//pridat i platformy/casti co se hybou do stran nebo nahoru/dolu, a pak nejaka co se po chvili rozbije)
+                //game over screen se statistikou hry
+                //možnost restartu hry
+                //grafika (srdicka nejak jeste udelat a mozna aj naboje jako kdy muzes znova vystrelit, i mensi graficky tutorial na ovladani)
+
+bugfixing:
+                //kdyz se smaze stary MapPrefab tak je neviditelna stena dost daleko na to aby jsi videl prazdnotu
+                //muzes se odrazet od steny(muzu skakat po boku protoze se dotykam zeme takze jakoby jsem byl na zemi)
+                //muzes proskocit ze spoda do zeme v jeskyni(jako by to byla platforma)
+                //střelba když jsi vysoko strašně divná(strasna odchylka)i kdyz je nizko tak taky trochu odchylka
+střelba do zemi proletí od Playera i enemy a do enemy to proletí na půl taky
+                //enemy kdyz je na kraji obrazovky tak nejde zabit
+                //skakani celkove zabugovane nekdy nemuzes vyskocit(vetsinu u prechodu na novy chunk mapy mozna ze jak jsou u sebe tak proste si mysli ze si jeste na tom pred tim kdyz uz jsi na tom druhem a jak prejdes tak uz nejsi na tom 1. tak to nastavi ze nejsi grounded)
+                //MapPrefab2 ma platformu na kterou nejde vyskocit a celkove posunute bloky
+                //MapPrefab7 pridat vetsi wait time u tech dvou pohybujicich se platform a jeste bug kdyz spadnes u te propadle a mas se teleportnout na tu zem tak jak je vysoka tak proste se teleportnes uvnitr a bude ta to furt zabijet
+                //MapPrefab8 ma spatne endPoint(moc vpravo)
+MapPrefab7 porad ty platformy jsou pomale a daleko od sebe
+
+
+celkove zrychlit platformy
+
+
+                                                                PIXELORAMA - open source graficky editor pro pixel art + animace
+# 4.
+menu s grafikou
+#--!lepsi grafika!--#
+animace(kvalitnejsi)                    
+zvuky(jak zvukove efekty tak hudba) tím pádem i v nastavení hlasitost a možnost vypnout zvuk
+        //sberatelne srdicka(nejspis jen z bossu)
+sberatelne boosty po mape(nevim jake)
+online staty
+dash systém
+více druhů enemy(npř. na blízko, na dá  lku normálně střílí, další co má granáty(jen možná), další co se teleportuje, další co padá z nebe, a pak třeba ufo co střílí z nebe)
+části kdyby se pozadí měnila(stage hry, takže možná i obtížnější)
+vylepseni nahodneho generovani mapy(vice chunku ze kterych se generuje napr. nacasovana pohybujici se platforma a ty musis neco projit rychle aby jsi ji stihl a preskocil pres diru)
+        nápady na mapy: menší podzemní část nad kterou bude tlačítko na odemčení pokračovaní a v podzemní části nějaká trapka ze stropu a celkově nějaké trapky a vylepšit prostředí ať to není suché a to samé dokola
+        //tlačítko na pauzu tam bude pokračovat nebo konec nebo restartovat
+
+
+/*
+podivat se na run n gun levely pro inspiraci
+*/
+##bonus##
+
+kdyby predesle tak dalsi upgrade:
+
+Game difficulty nastavení (míň životů, pomalejší střelba a né tak často a nepřátelé zase rychlejší střelba a častěji)
+více druhů střel => mechanika přepínání typu střel
+pokud bude specalni abilita tak perry system at se rychleji nabyje
+vice postav => vice specialnich abilitek => v menu výběr postavy
+možnsot najít nové zbraně na mapě třeba dropnou z enemy náhodně a nebo na nějaké délce třeba když bude mít skóre 1000 tak najde zbraň která by se odemkla
+možnost dropy z enemy
+minibossové co by se objevovali po např. 5000 skóre
