@@ -43,6 +43,15 @@ public class PlayerScript : MonoBehaviour
 
     public Transform firePoint; // nastav v Inspectoru na FirePoint (child hráče)
 
+    // Dash systém
+    public float dashDistance = 25f; // vzdálenost dashe v jednotkách - upravitelná v Inspectoru  
+    public float dashSpeed = 30f; // rychlost dashe - upravitelná v Inspectoru
+    private float dashCooldown = 2f; // cooldown 2 sekundy
+    private float lastDashTime = -999f;
+    private bool isDashing = false;
+    private Vector3 dashTarget;
+    private Vector3 dashStart;
+
     public float groundCheckDistance = 0.2f; // vzdálenost pro kontrolu pod hráčem
     public string[] groundTags = { "Ground", "Platform" }; // povolené tagy pro zem
     public float groundCheckWidth = 1f; // šířka boxu (přizpůsob šířce hráče)
@@ -174,6 +183,18 @@ if (Input.GetButtonDown("Jump") && rb != null && GetIsGrounded() && Mathf.Abs(rb
             else if (Input.GetKeyUp(KeyCode.LeftControl) && platformCollider != null)
             {
                 Physics2D.IgnoreCollision(playerCollider, platformCollider, false);
+            }
+
+            // Dash systém - detekce Shift klávesy
+            if (Input.GetKeyDown(KeyCode.LeftShift) && Time.time - lastDashTime >= dashCooldown && !isDashing)
+            {
+                StartDash();
+            }
+
+            // Provádění dashe
+            if (isDashing)
+            {
+                UpdateDash();
             }
 
             if (Input.GetMouseButton(0))
@@ -346,6 +367,53 @@ void OnTriggerEnter2D(Collider2D other)
             {
                 Time.timeScale = 1;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+
+            void StartDash()
+            {
+                if (player == null) return;
+
+                // Určí směr dashe podle toho, kam se hráč dívá
+                float direction = player.transform.localScale.x > 0 ? 1f : -1f;
+
+                // Nastavení start a cílové pozice
+                dashStart = player.transform.position;
+                dashTarget = dashStart;
+                dashTarget.x += direction * dashDistance;
+
+                // Spuštění dashe
+                isDashing = true;
+                lastDashTime = Time.time;
+
+                Debug.Log("Dash začíná! Směr: " + (direction > 0 ? "doprava" : "doleva") + ", vzdálenost: " + dashDistance);
+            }
+
+            void UpdateDash()
+            {
+                if (!isDashing || player == null) return;
+
+                // Pohyb jen v horizontálním směru - Y pozici necháváme být
+                Vector3 currentPos = player.transform.position;
+                Vector3 horizontalTarget = new Vector3(dashTarget.x, currentPos.y, currentPos.z);
+                
+                player.transform.position = Vector3.MoveTowards(
+                    currentPos, 
+                    horizontalTarget, 
+                    dashSpeed * Time.deltaTime
+                );
+
+                // Kontrola jestli jsme došli k cíli - kontrolujeme jen horizontální vzdálenost
+                float horizontalDistance = Mathf.Abs(player.transform.position.x - dashTarget.x);
+                if (horizontalDistance < 0.1f)
+                {
+                    // Nastavíme jen X pozici na přesnou hodnotu
+                    Vector3 finalPos = player.transform.position;
+                    finalPos.x = dashTarget.x;
+                    player.transform.position = finalPos;
+                    
+                    isDashing = false;
+                    Debug.Log("Dash dokončen!");
+                }
             }
 }
 

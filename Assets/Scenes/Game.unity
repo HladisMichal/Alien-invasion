@@ -1470,7 +1470,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -794, y: 389}
+  m_AnchoredPosition: {x: -794, y: 369}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &675582999
@@ -2466,7 +2466,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1052.99, y: 324.0004}
+  m_AnchoredPosition: {x: 1052.99, y: 304.00095}
   m_SizeDelta: {x: 822.22, y: 10.08}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1303938785
@@ -3088,7 +3088,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 64, y: -824}
+  m_AnchoredPosition: {x: 64, y: -779}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1477258133
@@ -3510,6 +3510,8 @@ MonoBehaviour:
   heartFull: {fileID: 4517553597814813242, guid: f4aed90cfd5d43f4bbcd5b26a3402cd3, type: 3}
   heartEmpty: {fileID: -5927788251420834186, guid: 4b1a97f4007fd154288e27ecf826c1e1, type: 3}
   firePoint: {fileID: 2143324996}
+  dashDistance: 25
+  dashSpeed: 30
   groundCheckDistance: 0.2
   groundTags:
   - Ground
