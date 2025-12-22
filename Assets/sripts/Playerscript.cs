@@ -52,6 +52,11 @@ public class PlayerScript : MonoBehaviour
     private Vector3 dashTarget;
     private Vector3 dashStart;
 
+    // Ikona dashe (ready/cooldown)
+    public Image dashIcon;
+    public Sprite dashReadySprite;
+    public Sprite dashCooldownSprite;
+
     public float groundCheckDistance = 0.2f; // vzdálenost pro kontrolu pod hráčem
     public string[] groundTags = { "Ground", "Platform" }; // povolené tagy pro zem
     public float groundCheckWidth = 1f; // šířka boxu (přizpůsob šířce hráče)
@@ -190,12 +195,17 @@ if (Input.GetButtonDown("Jump") && rb != null && GetIsGrounded() && Mathf.Abs(rb
             {
                 StartDash();
             }
+            
 
             // Provádění dashe
             if (isDashing)
             {
                 UpdateDash();
             }
+
+            // Přepnutí ikony a fill amount podle dostupnosti dashe
+            bool dashReady = Time.time - lastDashTime >= dashCooldown && !isDashing;
+            UpdateDashUI(dashReady, Time.time - lastDashTime);
 
             if (Input.GetMouseButton(0))
 {
@@ -414,6 +424,18 @@ void OnTriggerEnter2D(Collider2D other)
                     isDashing = false;
                     Debug.Log("Dash dokončen!");
                 }
+            }
+
+            void UpdateDashUI(bool isReady, float elapsedSinceLastDash)
+            {
+                if (dashIcon == null) return;
+
+                // Přepni sprite podle stavu
+                dashIcon.sprite = isReady ? dashReadySprite : dashCooldownSprite;
+
+                // Vyplň kolečko podle cooldownu (0 hned po dashe, 1 když je ready)
+                float fill = Mathf.Clamp01(elapsedSinceLastDash / dashCooldown);
+                dashIcon.fillAmount = isReady ? 1f : fill;
             }
 }
 
