@@ -77,12 +77,12 @@ public class EnemyScript : MonoBehaviour
             return;
         }
         double skore = PlayerScript.skore;
-        float bulletSpeed = 40f + (float)(skore / 1000.0); // každých 1000 skóre +1f
-        bulletSpeed = Mathf.Clamp(bulletSpeed, 40f, 80f);
+        float bulletSpeed = 2f + (float)(skore / 10000.0); // každých 1000 skóre +1f k rychlosti střely
+        bulletSpeed = Mathf.Clamp(bulletSpeed, 10f, 20f);
 
         // Přidej offset pro spawn střely
-        Vector3 spawnOffset = new Vector3(-5f, 5f, 0); // uprav hodnoty podle potřeby
-        GameObject projectile = Instantiate(enemyProjectilePrefab, transform.position + spawnOffset, Quaternion.identity);
+        
+        GameObject projectile = Instantiate(enemyProjectilePrefab, transform.position, Quaternion.identity);
 
         Vector2 direction = (player.position - transform.position).normalized;
         Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();

@@ -23,7 +23,7 @@ public class Bulletscript : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            rb.velocity = direction * strelaSpeed; // Střela letí rovně ve směru, kam je otočená
+            rb.linearVelocity = direction * strelaSpeed; // Střela letí rovně ve směru, kam je otočená
         }
     }
 

@@ -60,7 +60,7 @@ public class MapGeneration : MonoBehaviour
         // Pohyb neviditelné stěny (ponechávám)
         if (player != null && invisWall != null)
         {
-            float wallX = player.transform.position.x - 150f;
+            float wallX = player.transform.position.x - 20f;
             if (invisWall.transform.position.x < wallX)
                 invisWall.transform.position = new Vector3(wallX, invisWall.transform.position.y, invisWall.transform.position.z);
         }
@@ -121,14 +121,14 @@ public class MapGeneration : MonoBehaviour
     {
         while (true)
         {
-            float delay = Random.Range(20f, 55f);
+            float delay = Random.Range(5f, 10f);
             yield return new WaitForSeconds(delay);
 
             if (ufoPrefab != null && Camera.main != null)
             {
                 
-                float offsetX = 3f;
-                float offsetY = -3f;
+                float offsetX = 0.6f;
+                float offsetY = -0.6f;
                 Vector3 viewportPos = new Vector3(1, 1, player.transform.position.z - Camera.main.transform.position.z);
                 Vector3 spawnPos = Camera.main.ViewportToWorldPoint(viewportPos);
                 spawnPos.x += offsetX;

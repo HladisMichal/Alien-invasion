@@ -5,9 +5,6 @@ using System.Collections;
 public class UFOFollowPlayer : MonoBehaviour
 {
     public GameObject player;
-    public float minDistance = 5f;
-    public float maxDistance = 20f;
-    public float speed = 2f;
 
     public GameObject laserBodyPrefab;
     public GameObject laserEndPrefab;
@@ -75,11 +72,12 @@ public class UFOFollowPlayer : MonoBehaviour
             currentLaserBody.transform.position = laserBodyPos;
             currentLaserBody.transform.localScale = new Vector3(
                 currentLaserBody.transform.localScale.x,
-                distance * 0.25f,
+                distance * 2.5f,
                 currentLaserBody.transform.localScale.z
             );
 
-            Vector3 laserEndPos = new Vector3(hit.point.x + 0.235f, hit.point.y - 4f, transform.position.z);
+            // Laser end - spawne se na zemi
+            Vector3 laserEndPos = new Vector3(hit.point.x + 0.025f, hit.point.y - 0.35f, transform.position.z);
             if (currentLaserEnd == null)
                 currentLaserEnd = Instantiate(laserEndPrefab, laserEndPos, Quaternion.identity, transform);
             else
@@ -96,7 +94,7 @@ public class UFOFollowPlayer : MonoBehaviour
             currentLaserBody.transform.position = laserBodyPos;
             currentLaserBody.transform.localScale = new Vector3(
                 currentLaserBody.transform.localScale.x,
-                20f,
+                30f,
                 currentLaserBody.transform.localScale.z
             );
             if (currentLaserEnd != null)

@@ -164,7 +164,7 @@ public class PlayerScript : MonoBehaviour
             }
 
             // Skákání přes dva Raycasty těsně NAD spodní hranou collideru (levý a pravý roh)
-if (Input.GetButtonDown("Jump") && rb != null && GetIsGrounded() && Mathf.Abs(rb.velocity.y) < 0.01f)
+if (Input.GetButtonDown("Jump") && rb != null && GetIsGrounded() && Mathf.Abs(rb.linearVelocity.y) < 0.01f)
 {
     Jump();
 }
