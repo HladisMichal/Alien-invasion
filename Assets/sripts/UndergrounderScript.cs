@@ -12,6 +12,9 @@ public class UndergrounderScript : MonoBehaviour
 
     private bool canActivate = true; // může se aktivovat?
     public BoxCollider2D damageCollider; // přiřaď v Inspectoru BoxCollider, který má způsobovat damage
+    
+    private float lastDamageTime = -100f; // čas posledního damage
+    public float damageCooldown = 20f; // cooldown mezi damage (1 sekunda)
 
     void Start()
     {
@@ -53,6 +56,37 @@ public class UndergrounderScript : MonoBehaviour
         canActivate = true; // povolí aktivaci
     }
 
+    // Automatická detekce kolize - volá se okamžitě při dotyku
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player") && Time.time >= lastDamageTime + damageCooldown)
+        {
+            Debug.Log("Undergrounder se dotkl hráče - odebírám život!");
+            PlayerScript player = other.GetComponent<PlayerScript>();
+            if (player != null)
+            {
+                player.OdeberZivoty();
+                lastDamageTime = Time.time;
+            }
+        }
+    }
+
+    // Kontinuální kontrola - volá se každý frame když jsou v kontaktu
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Player") && Time.time >= lastDamageTime + damageCooldown)
+        {
+            Debug.Log("Undergrounder stále v kontaktu s hráčem - odebírám život!");
+            PlayerScript player = other.GetComponent<PlayerScript>();
+            if (player != null)
+            {
+                player.OdeberZivoty();
+                lastDamageTime = Time.time;
+            }
+        }
+    }
+
+    // Záložní metoda pro manuální volání (pokud je používána v animaci)
     public void uberZivot()
     {
         if (playerTransform == null || damageCollider == null)

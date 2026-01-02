@@ -77,7 +77,7 @@ public class EnemyScript : MonoBehaviour
             return;
         }
         double skore = PlayerScript.skore;
-        float bulletSpeed = 2f + (float)(skore / 10000.0); // každých 1000 skóre +1f k rychlosti střely
+        float bulletSpeed = 2.5f + (float)(skore / 10000.0); // každých 1000 skóre +1f k rychlosti střely
         bulletSpeed = Mathf.Clamp(bulletSpeed, 10f, 20f);
 
         // Přidej offset pro spawn střely

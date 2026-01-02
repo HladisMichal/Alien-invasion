@@ -96,7 +96,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 834006985072511220}
-  - component: {fileID: 8190522885050948175}
+  - component: {fileID: 4152422832245123106}
   m_Layer: 0
   m_Name: Undergrounder
   m_TagString: Untagged
@@ -114,14 +114,14 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 378.5, y: 168.4, z: 344.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.13323595, y: 0.13323595, z: 0.13323595}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2666104766386153434}
   - {fileID: 5312062921766697683}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8190522885050948175
+--- !u!114 &4152422832245123106
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,15 +130,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3890035198423368016}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94713359147faeb48a36c99a4cd6dad0, type: 3}
+  m_Script: {fileID: 11500000, guid: c7f8e07df354b5b4798fb00cbe905f27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   partToActivate: {fileID: 7259063161834235590}
   holeTransform: {fileID: 2666104766386153434}
   playerTransform: {fileID: 0}
-  activationDistance: 9.6
-  waitTime: 2
+  activationDistance: 1
+  waitTime: 3
   damageCollider: {fileID: 0}
+  damageCooldown: 1
 --- !u!1 &3980302148712442611
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,7 +152,7 @@ GameObject:
   - component: {fileID: 1478519126917127198}
   - component: {fileID: 357801830022697210}
   - component: {fileID: 5818909393864714665}
-  - component: {fileID: 3810330617428504292}
+  - component: {fileID: 6875983228433800389}
   m_Layer: 0
   m_Name: UndergrounderSprite
   m_TagString: Enemy
@@ -281,11 +282,11 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0020258054, y: -0.12998638}
+  m_Offset: {x: -0.00066319853, y: -0.112652436}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -295,9 +296,9 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.24812113, y: 0.20005889}
+  m_Size: {x: 0.32154375, y: 0.23472676}
   m_EdgeRadius: 0
---- !u!114 &3810330617428504292
+--- !u!114 &6875983228433800389
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -306,15 +307,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3980302148712442611}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94713359147faeb48a36c99a4cd6dad0, type: 3}
+  m_Script: {fileID: 11500000, guid: c7f8e07df354b5b4798fb00cbe905f27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  partToActivate: {fileID: 0}
-  holeTransform: {fileID: 0}
+  partToActivate: {fileID: 7259063161834235590}
+  holeTransform: {fileID: 2666104766386153434}
   playerTransform: {fileID: 0}
-  activationDistance: 9.6
-  waitTime: 5
+  activationDistance: 1
+  waitTime: 3
   damageCollider: {fileID: 5818909393864714665}
+  damageCooldown: 1
 --- !u!1 &7259063161834235590
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,7 +327,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5312062921766697683}
   - component: {fileID: 4189901939676226249}
-  - component: {fileID: 9135527150762569571}
+  - component: {fileID: 8307666666155843719}
   m_Layer: 0
   m_Name: UndergrounderPosition
   m_TagString: Untagged
@@ -371,7 +373,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &9135527150762569571
+--- !u!114 &8307666666155843719
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -380,12 +382,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7259063161834235590}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94713359147faeb48a36c99a4cd6dad0, type: 3}
+  m_Script: {fileID: 11500000, guid: c7f8e07df354b5b4798fb00cbe905f27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   partToActivate: {fileID: 7259063161834235590}
-  holeTransform: {fileID: 0}
+  holeTransform: {fileID: 2666104766386153434}
   playerTransform: {fileID: 0}
-  activationDistance: 9.6
-  waitTime: 0
+  activationDistance: 1
+  waitTime: 3
   damageCollider: {fileID: 0}
+  damageCooldown: 1
