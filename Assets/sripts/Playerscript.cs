@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using System.Collections;
 using TMPro;
+using UnityEngine.Tilemaps;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -31,6 +32,11 @@ public class PlayerScript : MonoBehaviour
     public GameObject deathZone; 
 
     public Button restartButton;
+    
+    public Tilemap groundTilemap; // Volitelné: jedna Tilemap (když je nastavena, použije se přímo)
+    public bool autoFindTilemaps = true; // Když není nastavena, najdeme Tilemapy automaticky ve scéně
+    public string[] tilemapTags = { "Ground", "Platform" }; // Volitelná filtrace Tilemap podle tagu
+    public float tileSearchRadius = 50f; // Poloměr hledání bezpečného tile (v jednotkách světa)
 
     private Animator animator;
 
@@ -290,11 +296,23 @@ void OnTriggerEnter2D(Collider2D other)
             OdeberZivoty();
             Debug.Log("Hráč spadl do smrtící zóny! Životy: " + zivoty);
 
-            // Najdi všechny objekty s tagem "Ground" a "Platform"
+            // Pokus o teleport na Tilemapy ve scéně (univerzálně, bez seznamu GameObjectů)
+            Tilemap[] tilemapsToUse = GetRelevantTilemaps();
+            if (tilemapsToUse != null && tilemapsToUse.Length > 0)
+            {
+                Vector3 safePos = FindNearestSafeTileAcrossTilemaps(player.transform.position, tilemapsToUse);
+                if (safePos != Vector3.zero)
+                {
+                    player.transform.position = safePos;
+                    Debug.Log("Hráč teleportován na bezpečný tile: " + safePos);
+                    return;
+                }
+            }
+
+            // Fallback na staré GameObjecty pokud Tilemap není přiřazená nebo nebyl nalezen tile
             GameObject[] groundObjects = GameObject.FindGameObjectsWithTag("Ground");
             GameObject[] platformObjects = GameObject.FindGameObjectsWithTag("Platform");
 
-            // Spoj oba seznamy do jednoho
             List<GameObject> allSurfaces = new List<GameObject>();
             allSurfaces.AddRange(groundObjects);
             allSurfaces.AddRange(platformObjects);
@@ -436,6 +454,102 @@ void OnTriggerEnter2D(Collider2D other)
                 // Vyplň kolečko podle cooldownu (0 hned po dashe, 1 když je ready)
                 float fill = Mathf.Clamp01(elapsedSinceLastDash / dashCooldown);
                 dashIcon.fillAmount = isReady ? 1f : fill;
+            }
+
+            // Najde nejbližší bezpečný tile na zadané Tilemapě
+            Vector3 FindNearestSafeTile(Tilemap tilemap, Vector3 fromPosition)
+            {
+                if (tilemap == null) return Vector3.zero;
+
+                Vector3Int playerCellPos = tilemap.WorldToCell(fromPosition);
+                int searchRadiusCells = Mathf.CeilToInt(tileSearchRadius);
+
+                Vector3 bestPosition = Vector3.zero;
+                float bestDistance = Mathf.Infinity;
+
+                // Hledáme v okolí hráče
+                for (int x = -searchRadiusCells; x <= searchRadiusCells; x++)
+                {
+                    for (int y = -searchRadiusCells; y <= searchRadiusCells; y++)
+                    {
+                        Vector3Int checkPos = playerCellPos + new Vector3Int(x, y, 0);
+
+                        if (tilemap.HasTile(checkPos))
+                        {
+                            Vector3Int abovePos = checkPos + new Vector3Int(0, 1, 0);
+                            if (!tilemap.HasTile(abovePos))
+                            {
+                                Vector3 tileWorldPos = tilemap.GetCellCenterWorld(checkPos);
+                                tileWorldPos.y += tilemap.cellSize.y / 2f + 1f;
+
+                                float distance = Vector2.Distance(fromPosition, tileWorldPos);
+                                if (distance < bestDistance)
+                                {
+                                    bestDistance = distance;
+                                    bestPosition = tileWorldPos;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return bestPosition;
+            }
+
+            // Projde všechny relevantní Tilemapy a najde nejlepší bezpečnou pozici
+            Vector3 FindNearestSafeTileAcrossTilemaps(Vector3 fromPosition, Tilemap[] tilemaps)
+            {
+                if (tilemaps == null || tilemaps.Length == 0) return Vector3.zero;
+
+                Vector3 bestPosition = Vector3.zero;
+                float bestDistance = Mathf.Infinity;
+
+                foreach (var tm in tilemaps)
+                {
+                    if (tm == null || !tm.gameObject.activeInHierarchy) continue;
+                    Vector3 candidate = FindNearestSafeTile(tm, fromPosition);
+                    if (candidate != Vector3.zero)
+                    {
+                        float distance = Vector2.Distance(fromPosition, candidate);
+                        if (distance < bestDistance)
+                        {
+                            bestDistance = distance;
+                            bestPosition = candidate;
+                        }
+                    }
+                }
+
+                return bestPosition;
+            }
+
+            // Získá seznam Tilemap ve scéně podle nastavení (jedna z Inspectoru, nebo automaticky nalezené)
+            Tilemap[] GetRelevantTilemaps()
+            {
+                if (groundTilemap != null)
+                {
+                    return new Tilemap[] { groundTilemap };
+                }
+
+                if (!autoFindTilemaps) return System.Array.Empty<Tilemap>();
+
+                var all = GameObject.FindObjectsOfType<Tilemap>();
+                if (tilemapTags != null && tilemapTags.Length > 0)
+                {
+                    List<Tilemap> filtered = new List<Tilemap>();
+                    foreach (var tm in all)
+                    {
+                        foreach (var tag in tilemapTags)
+                        {
+                            if (!string.IsNullOrEmpty(tag) && tm.gameObject.CompareTag(tag))
+                            {
+                                filtered.Add(tm);
+                                break;
+                            }
+                        }
+                    }
+                    return filtered.ToArray();
+                }
+                return all;
             }
 }
 
