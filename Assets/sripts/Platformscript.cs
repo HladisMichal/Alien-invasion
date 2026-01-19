@@ -22,6 +22,7 @@ public class Platformscript : MonoBehaviour
     private bool waiting = false;
 
     private bool shouldMove = false; // pro režim 3, kdy se platforma pohybuje jen jednou směrem k cíli
+    private bool isReturning = false; // pro režim 3 a 4, kdy se vrací na původní místo
 
     void Start()
     {
@@ -58,27 +59,84 @@ public class Platformscript : MonoBehaviour
             if (waitTimer <= 0f)
             {
                 waiting = false;
-                direction *= -1;
-                SetTargetPosition();
+                if (smer == 1 || smer == 2)
+                {
+                    direction *= -1;
+                    SetTargetPosition();
+                }
+                else if (smer == 3 || smer == 4)
+                {
+                    // Pro režim 3 a 4 se vrací na původní místo
+                    isReturning = true;
+                }
             }
             return;
         
         }
 
         if (smer == 3)
-    {
-        if (!shouldMove)
-            return; // čeká na dotyk hráče
-
-        // Pohyb pouze jednou směrem k targetPosition
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-
-        if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
         {
-            shouldMove = false; // zastaví se po dosažení cíle
+            // Režim 3: Horizontální pohyb (doleva/doprava) na dotek
+            if (!shouldMove && !isReturning)
+                return; // čeká na dotyk hráče
+
+            if (!isReturning)
+            {
+                // Pohyb směrem k cíli
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+
+                if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
+                {
+                    shouldMove = false;
+                    waiting = true;
+                    waitTimer = waitTime; // čeká před vrácením
+                }
+            }
+            else
+            {
+                // Návrat na původní místo
+                transform.position = Vector3.MoveTowards(transform.position, startPosition, speed * Time.deltaTime);
+
+                if (Vector3.Distance(transform.position, startPosition) < 0.01f)
+                {
+                    isReturning = false;
+                    shouldMove = false;
+                }
+            }
+            return;
         }
-        return;
-    }
+
+        if (smer == 4)
+        {
+            // Režim 4: Vertikální pohyb (nahoru/dolů) na dotek
+            if (!shouldMove && !isReturning)
+                return; // čeká na dotyk hráče
+
+            if (!isReturning)
+            {
+                // Pohyb směrem k cíli
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+
+                if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
+                {
+                    shouldMove = false;
+                    waiting = true;
+                    waitTimer = waitTime; // čeká před vrácením
+                }
+            }
+            else
+            {
+                // Návrat na původní místo
+                transform.position = Vector3.MoveTowards(transform.position, startPosition, speed * Time.deltaTime);
+
+                if (Vector3.Distance(transform.position, startPosition) < 0.01f)
+                {
+                    isReturning = false;
+                    shouldMove = false;
+                }
+            }
+            return;
+        }
 
         if (smer != 1 && smer != 2)
             return;
@@ -116,6 +174,16 @@ public class Platformscript : MonoBehaviour
         {
             targetPosition = startPosition + new Vector3(moveDistance * direction, 0, 0);
         }
+        else if (smer == 3)
+        {
+            // Režim 3: Horizontální pohyb
+            targetPosition = startPosition + new Vector3(moveDistance * direction, 0, 0);
+        }
+        else if (smer == 4)
+        {
+            // Režim 4: Vertikální pohyb
+            targetPosition = startPosition + new Vector3(0, moveDistance * direction, 0);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -131,11 +199,10 @@ public class Platformscript : MonoBehaviour
             collision.transform.SetParent(this.transform, true); // zachová pozici a scale
         }
 
-        if (smer == 3 && !shouldMove)
+        if ((smer == 3 || smer == 4) && !shouldMove && !isReturning)
         {
             shouldMove = true;
-            // Nastav targetPosition jen jednou při dotyku
-            targetPosition = startPosition + new Vector3(moveDistance * direction, 0, 0);
+            SetTargetPosition();
         }
     }
 

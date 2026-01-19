@@ -73,7 +73,7 @@ public class MapGeneration : MonoBehaviour
             if (endPoint != null)
             {
                 float vzdalenost = Mathf.Abs(player.transform.position.x - endPoint.position.x);
-                if (vzdalenost < 100f)
+                if (vzdalenost < 20f)
                 {
                     // Najdi jiný chunk než poslední
                     int newIndex;
@@ -97,7 +97,7 @@ public class MapGeneration : MonoBehaviour
 
                 if (zacatek != null && player != null && zacateknahodneho != null)
         {
-            if (player.transform.position.x > zacateknahodneho.transform.position.x + 200f)
+            if (player.transform.position.x > zacateknahodneho.transform.position.x + 50f)
             {
                 Destroy(zacatek);
                 zacatek = null; // aby se neničil opakovaně
@@ -108,8 +108,8 @@ public class MapGeneration : MonoBehaviour
         if (activeChunks.Count > 2 && player != null)
         {
             GameObject firstChunk = activeChunks[0];
-            Transform startPoint = firstChunk.transform.Find("startPoint");
-            if (startPoint != null && player.transform.position.x - startPoint.position.x > 200f)
+            Transform endPoint = firstChunk.transform.Find("endPoint");
+            if (endPoint != null && player.transform.position.x - endPoint.position.x > 20f)
             {
                 Destroy(firstChunk);
                 activeChunks.RemoveAt(0);
