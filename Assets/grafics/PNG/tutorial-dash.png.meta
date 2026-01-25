@@ -1,16 +1,13 @@
 fileFormatVersion: 2
-guid: a6ca7859efa8f114e80be80cdac64cb4
+guid: 6214437a43f0ba64f9d76dcc7ce225e6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2285311575895712816
-    second: "Datov\xFD zdroj 5_0"
+      213: -8132383404893087771
+    second: tutorial-dash_0
   - first:
-      213: 596082254399163159
-    second: "Datov\xFD zdroj 5_1"
-  - first:
-      213: -8278675214755584380
-    second: "Datov\xFD zdroj 5_2"
+      213: -4005136622280070344
+    second: tutorial-dash_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -119,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "Datov\xFD zdroj 5_0"
+      name: tutorial-dash_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 161
-        width: 380
-        height: 84
+        y: 47
+        width: 114
+        height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,42 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0342a5a25ce07bf10800000000000000
-      internalID: 2285311575895712816
+      spriteID: 5e7d0166168f32f80800000000000000
+      internalID: -8132383404893087771
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "Datov\xFD zdroj 5_1"
+      name: tutorial-dash_1
       rect:
         serializedVersion: 2
-        x: 161
-        y: 79
-        width: 49
-        height: 44
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 71b4066f6a5b54800800000000000000
-      internalID: 596082254399163159
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "Datov\xFD zdroj 5_2"
-      rect:
-        serializedVersion: 2
-        x: 63
+        x: 19
         y: 0
-        width: 253
-        height: 67
+        width: 75
+        height: 41
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -178,8 +153,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 486a9a521cc3c1d80800000000000000
-      internalID: -8278675214755584380
+      spriteID: 83ba6105675ea68c0800000000000000
+      internalID: -4005136622280070344
       vertices: []
       indices: 
       edges: []
@@ -198,9 +173,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "Datov\xFD zdroj 5_0": 2285311575895712816
-      "Datov\xFD zdroj 5_1": 596082254399163159
-      "Datov\xFD zdroj 5_2": -8278675214755584380
+      tutorial-dash_0: -8132383404893087771
+      tutorial-dash_1: -4005136622280070344
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

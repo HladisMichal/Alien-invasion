@@ -1,25 +1,28 @@
 fileFormatVersion: 2
-guid: 8ed6d636704f3df44821a3aee8f93c9f
+guid: 38d40183918f19548a3747ac3c96f7b4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2084886023144549345
-    second: "Datov\xFD zdroj 4_0"
+      213: 7669814347158055258
+    second: tutorial-chuze_0
   - first:
-      213: 5063613490547180959
-    second: "Datov\xFD zdroj 4_1"
+      213: 767564961260731019
+    second: tutorial-chuze_1
   - first:
-      213: -2910537578956775715
-    second: "Datov\xFD zdroj 4_2"
+      213: -3801440985323229255
+    second: tutorial-chuze_2
   - first:
-      213: 2707477374069505602
-    second: "Datov\xFD zdroj 4_3"
+      213: -7533049158451532287
+    second: tutorial-chuze_3
   - first:
-      213: -5153070820946203585
-    second: "Datov\xFD zdroj 4_4"
+      213: 7422293973383036212
+    second: tutorial-chuze_4
   - first:
-      213: -8110371512256714330
-    second: "Datov\xFD zdroj 4_5"
+      213: -6939834455795424403
+    second: tutorial-chuze_5
+  - first:
+      213: -5275072624320195960
+    second: tutorial-chuze_6
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -128,13 +131,35 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "Datov\xFD zdroj 4_0"
+      name: tutorial-chuze_0
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 289
+        width: 304
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a59ec872387a07a60800000000000000
+      internalID: 7669814347158055258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-chuze_1
       rect:
         serializedVersion: 2
         x: 0
-        y: 130
-        width: 53
-        height: 49
+        y: 176
+        width: 225
+        height: 39
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,20 +168,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f14da49453ff013e0800000000000000
-      internalID: -2084886023144549345
+      spriteID: b8a7bf9f340f6aa00800000000000000
+      internalID: 767564961260731019
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "Datov\xFD zdroj 4_1"
+      name: tutorial-chuze_2
       rect:
         serializedVersion: 2
-        x: 48
-        y: 130
-        width: 290
-        height: 63
+        x: 345
+        y: 175
+        width: 273
+        height: 41
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -165,64 +190,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f95c0f734a1954640800000000000000
-      internalID: 5063613490547180959
+      spriteID: 9bfa23390919e3bc0800000000000000
+      internalID: -3801440985323229255
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "Datov\xFD zdroj 4_2"
+      name: tutorial-chuze_3
       rect:
         serializedVersion: 2
-        x: 132
-        y: 86
-        width: 14
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: dde1bdc1e71bb97d0800000000000000
-      internalID: -2910537578956775715
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "Datov\xFD zdroj 4_3"
-      rect:
-        serializedVersion: 2
-        x: 138
-        y: 0
-        width: 62
-        height: 93
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 24ef1dea354e29520800000000000000
-      internalID: 2707477374069505602
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "Datov\xFD zdroj 4_4"
-      rect:
-        serializedVersion: 2
-        x: 146
+        x: 84
         y: 93
-        width: 11
-        height: 11
+        width: 49
+        height: 45
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -231,20 +212,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f3c2217f36d9c78b0800000000000000
-      internalID: -5153070820946203585
+      spriteID: 10ee0f2c3bb357790800000000000000
+      internalID: -7533049158451532287
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "Datov\xFD zdroj 4_5"
+      name: tutorial-chuze_4
       rect:
         serializedVersion: 2
-        x: 127
-        y: 76
-        width: 12
-        height: 10
+        x: 449
+        y: 91
+        width: 49
+        height: 46
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -253,8 +234,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6a9ad77841c227f80800000000000000
-      internalID: -8110371512256714330
+      spriteID: 43db4063b09410760800000000000000
+      internalID: 7422293973383036212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-chuze_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 43
+        width: 49
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d632c4ec451c0bf90800000000000000
+      internalID: -6939834455795424403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial-chuze_6
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 43
+        width: 49
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 882d10f856d2bc6b0800000000000000
+      internalID: -5275072624320195960
       vertices: []
       indices: 
       edges: []
@@ -273,12 +298,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "Datov\xFD zdroj 4_0": -2084886023144549345
-      "Datov\xFD zdroj 4_1": 5063613490547180959
-      "Datov\xFD zdroj 4_2": -2910537578956775715
-      "Datov\xFD zdroj 4_3": 2707477374069505602
-      "Datov\xFD zdroj 4_4": -5153070820946203585
-      "Datov\xFD zdroj 4_5": -8110371512256714330
+      tutorial-chuze_0: 7669814347158055258
+      tutorial-chuze_1: 767564961260731019
+      tutorial-chuze_2: -3801440985323229255
+      tutorial-chuze_3: -7533049158451532287
+      tutorial-chuze_4: 7422293973383036212
+      tutorial-chuze_5: -6939834455795424403
+      tutorial-chuze_6: -5275072624320195960
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

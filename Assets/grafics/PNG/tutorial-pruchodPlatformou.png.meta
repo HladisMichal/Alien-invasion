@@ -1,22 +1,22 @@
 fileFormatVersion: 2
-guid: 512e3d1589cabf74598aeac0278d6b7c
+guid: 0f050654ce2d7e54db96bb376ee1c379
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6564461174111534206
-    second: "Datov\xFD zdroj 6_0"
+      213: 2991053040814050518
+    second: tutorial-pruchodPlatformou_0
   - first:
-      213: -8720700984844432646
-    second: "Datov\xFD zdroj 6_1"
+      213: -4844671729115515054
+    second: tutorial-pruchodPlatformou_1
   - first:
-      213: 8003442046270747425
-    second: "Datov\xFD zdroj 6_2"
+      213: 7077961576165764314
+    second: tutorial-pruchodPlatformou_2
   - first:
-      213: 2733819329874676727
-    second: "Datov\xFD zdroj 6_3"
+      213: 3954364097869626721
+    second: tutorial-pruchodPlatformou_3
   - first:
-      213: -7255182999240620167
-    second: "Datov\xFD zdroj 6_4"
+      213: 2245768005627429657
+    second: tutorial-pruchodPlatformou_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -125,7 +125,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "Datov\xFD zdroj 6_0"
+      name: tutorial-pruchodPlatformou_0
       rect:
         serializedVersion: 2
         x: 0
@@ -140,14 +140,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e7cf2c868a6a91b50800000000000000
-      internalID: 6564461174111534206
+      spriteID: 6dcc212b4ea528920800000000000000
+      internalID: 2991053040814050518
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "Datov\xFD zdroj 6_1"
+      name: tutorial-pruchodPlatformou_1
       rect:
         serializedVersion: 2
         x: 4
@@ -162,14 +162,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: afac2f598a8d9f680800000000000000
-      internalID: -8720700984844432646
+      spriteID: 25731b40bb444ccb0800000000000000
+      internalID: -4844671729115515054
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "Datov\xFD zdroj 6_2"
+      name: tutorial-pruchodPlatformou_2
       rect:
         serializedVersion: 2
         x: 215
@@ -184,14 +184,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 123b4641320f11f60800000000000000
-      internalID: 8003442046270747425
+      spriteID: adc69398d88f93260800000000000000
+      internalID: 7077961576165764314
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "Datov\xFD zdroj 6_3"
+      name: tutorial-pruchodPlatformou_3
       rect:
         serializedVersion: 2
         x: 276
@@ -206,14 +206,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7fbc645323a70f520800000000000000
-      internalID: 2733819329874676727
+      spriteID: 16db3162239b0e630800000000000000
+      internalID: 3954364097869626721
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "Datov\xFD zdroj 6_4"
+      name: tutorial-pruchodPlatformou_4
       rect:
         serializedVersion: 2
         x: 128
@@ -228,8 +228,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9774fc57089605b90800000000000000
-      internalID: -7255182999240620167
+      spriteID: 9134c5f3a129a2f10800000000000000
+      internalID: 2245768005627429657
       vertices: []
       indices: 
       edges: []
@@ -248,11 +248,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "Datov\xFD zdroj 6_0": 6564461174111534206
-      "Datov\xFD zdroj 6_1": -8720700984844432646
-      "Datov\xFD zdroj 6_2": 8003442046270747425
-      "Datov\xFD zdroj 6_3": 2733819329874676727
-      "Datov\xFD zdroj 6_4": -7255182999240620167
+      tutorial-pruchodPlatformou_0: 2991053040814050518
+      tutorial-pruchodPlatformou_1: -4844671729115515054
+      tutorial-pruchodPlatformou_2: 7077961576165764314
+      tutorial-pruchodPlatformou_3: 3954364097869626721
+      tutorial-pruchodPlatformou_4: 2245768005627429657
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
