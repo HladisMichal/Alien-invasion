@@ -11,6 +11,8 @@ TagManager:
   - DeathZone
   - Collectible
   - Laser
+  - miniboss
+  - BossBar
   layers:
   - Default
   - TransparentFX

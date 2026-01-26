@@ -156,11 +156,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  minDistance: 5
-  maxDistance: 50
-  speed: 2
   laserBodyPrefab: {fileID: 8823679033252868969, guid: ee996dfaf3fa31e4e90f8be3321797e9, type: 3}
   laserEndPrefab: {fileID: 5475151717424864890, guid: 00cef29fce4965e4494cc88469507157, type: 3}
+  continuousFire: 0
 --- !u!1 &9171714655185032964
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,7 +186,7 @@ Transform:
   m_GameObject: {fileID: 9171714655185032964}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 135.6, y: 23.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -230,8 +228,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  minDistance: 5
-  maxDistance: 20
-  speed: 2
   laserBodyPrefab: {fileID: 8823679033252868969, guid: ee996dfaf3fa31e4e90f8be3321797e9, type: 3}
   laserEndPrefab: {fileID: 5475151717424864890, guid: 00cef29fce4965e4494cc88469507157, type: 3}
+  continuousFire: 0

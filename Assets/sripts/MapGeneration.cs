@@ -10,6 +10,10 @@ public class MapGeneration : MonoBehaviour
     public GameObject invisWall;
     public GameObject zacatek;
     public List<GameObject> chunkPrefabs;
+    
+    // Miniboss chunky
+    public List<GameObject> minibossChunkPrefabs;
+    private int lastMinibossIndex = -1;
 
     // UFO prefab
     public GameObject ufoPrefab;
@@ -17,6 +21,11 @@ public class MapGeneration : MonoBehaviour
 
     private List<GameObject> activeChunks = new List<GameObject>();
     private int lastChunkIndex = -1;
+    private Coroutine ufoSpawnCoroutine;
+    private float nextMilestoneBoss = 2000f; // Příští skóre pro boss chunk
+
+    // Static reference pro přístup z jiných skriptů (miniboss)
+    public static MapGeneration instance;
 
 
     public void RespawnPlatformDelayed(GameObject platform, float delay)
@@ -40,6 +49,9 @@ public class MapGeneration : MonoBehaviour
 
     void Start()
     {
+        // Nastav static referenci
+        instance = this;
+
         // Spawn první chunk na zacateknahodneho
         int index = Random.Range(0, chunkPrefabs.Count);
         lastChunkIndex = index;
@@ -52,7 +64,7 @@ public class MapGeneration : MonoBehaviour
         }
         activeChunks.Add(firstChunk);
 
-        StartCoroutine(SpawnUfoRoutine());
+        ufoSpawnCoroutine = StartCoroutine(SpawnUfoRoutine());
     }
 
     void Update()
@@ -75,22 +87,46 @@ public class MapGeneration : MonoBehaviour
                 float vzdalenost = Mathf.Abs(player.transform.position.x - endPoint.position.x);
                 if (vzdalenost < 20f)
                 {
-                    // Najdi jiný chunk než poslední
-                    int newIndex;
-                    do
+                    // Kontrola, zda má být spawnnut miniboss chunk
+                    if (PlayerScript.skore >= nextMilestoneBoss && minibossChunkPrefabs != null && minibossChunkPrefabs.Count > 0)
                     {
-                        newIndex = Random.Range(0, chunkPrefabs.Count);
-                    } while (newIndex == lastChunkIndex && chunkPrefabs.Count > 1);
+                        // Vyber náhodný miniboss chunk (jiný než poslední)
+                        int newMinibossIndex;
+                        do
+                        {
+                            newMinibossIndex = Random.Range(0, minibossChunkPrefabs.Count);
+                        } while (newMinibossIndex == lastMinibossIndex && minibossChunkPrefabs.Count > 1);
 
-                    lastChunkIndex = newIndex;
-                    GameObject newChunk = Instantiate(chunkPrefabs[newIndex], Vector3.zero, Quaternion.identity);
-                    Transform newStart = newChunk.transform.Find("startPoint");
-                    if (newStart != null)
-                    {
-                        Vector3 offset = newChunk.transform.position - newStart.position;
-                        newChunk.transform.position = endPoint.position + offset;
+                        lastMinibossIndex = newMinibossIndex;
+                        GameObject newChunk = Instantiate(minibossChunkPrefabs[newMinibossIndex], Vector3.zero, Quaternion.identity);
+                        Transform newStart = newChunk.transform.Find("startPoint");
+                        if (newStart != null)
+                        {
+                            Vector3 offset = newChunk.transform.position - newStart.position;
+                            newChunk.transform.position = endPoint.position + offset;
+                        }
+                        activeChunks.Add(newChunk);
+                        nextMilestoneBoss += 2000f; // Dalších 2000 skóre pro příští boss
                     }
-                    activeChunks.Add(newChunk);
+                    else
+                    {
+                        // Normální chunk generování
+                        int newIndex;
+                        do
+                        {
+                            newIndex = Random.Range(0, chunkPrefabs.Count);
+                        } while (newIndex == lastChunkIndex && chunkPrefabs.Count > 1);
+
+                        lastChunkIndex = newIndex;
+                        GameObject newChunk = Instantiate(chunkPrefabs[newIndex], Vector3.zero, Quaternion.identity);
+                        Transform newStart = newChunk.transform.Find("startPoint");
+                        if (newStart != null)
+                        {
+                            Vector3 offset = newChunk.transform.position - newStart.position;
+                            newChunk.transform.position = endPoint.position + offset;
+                        }
+                        activeChunks.Add(newChunk);
+                    }
                 }
             }
         }
@@ -135,6 +171,25 @@ public class MapGeneration : MonoBehaviour
                 spawnPos.y += offsetY;
                 Instantiate(ufoPrefab, spawnPos, Quaternion.identity);
             }
+        }
+    }
+
+    // Vypne spawning normálních UFO (pro miniboss fight)
+    public void StopSpawningUFO()
+    {
+        if (ufoSpawnCoroutine != null)
+        {
+            StopCoroutine(ufoSpawnCoroutine);
+            ufoSpawnCoroutine = null;
+        }
+    }
+
+    // Zapne spawning normálních UFO (po miniboss fightu)
+    public void StartSpawningUFO()
+    {
+        if (ufoSpawnCoroutine == null)
+        {
+            ufoSpawnCoroutine = StartCoroutine(SpawnUfoRoutine());
         }
     }
 }

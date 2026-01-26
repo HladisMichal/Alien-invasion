@@ -26,6 +26,7 @@ public class PlayerScript : MonoBehaviour
     public static double skore;
     public double pohyboveSkore;
     public static double akceSkore;
+    public static bool cameraLocked = false; // Lock kamery během boss fightu
     public TMP_Text skoreText;
     public double maxskore;
     public UnityEngine.UI.Text GameOverText;
@@ -70,6 +71,7 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
+        cameraLocked = false; // Reset camera lock při startu
         UpdateHearts(); 
         scale = player.transform.localScale.x;
         if (player != null)
@@ -175,7 +177,11 @@ if (Input.GetButtonDown("Jump") && rb != null && GetIsGrounded() && Mathf.Abs(rb
     Jump();
 }
 
-            kamera.transform.position = new Vector3(player.transform.position.x, kamera.transform.position.y, kamera.transform.position.z);
+            // Posun kamery - jen pokud není locknutá
+            if (!cameraLocked)
+            {
+                kamera.transform.position = new Vector3(player.transform.position.x, kamera.transform.position.y, kamera.transform.position.z);
+            }
 
             if (move > 0)
             {
@@ -394,6 +400,7 @@ void OnTriggerEnter2D(Collider2D other)
            public void RestartGame()
             {
                 Time.timeScale = 1;
+                cameraLocked = false; // Unlock kamery při restartu
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
 

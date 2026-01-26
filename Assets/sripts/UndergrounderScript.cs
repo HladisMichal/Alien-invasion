@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class UndergrounderScript : MonoBehaviour
 {
@@ -11,19 +12,51 @@ public class UndergrounderScript : MonoBehaviour
     public float waitTime = 5f; // čas čekání po aktivaci
 
     private bool canActivate = true; // může se aktivovat?
-    public BoxCollider2D damageCollider; // přiřaď v Inspectoru BoxCollider, který má způsobovat damage
+    public BoxCollider2D damageCollider; // přiřaď v Inspektoru BoxCollider, který má způsobovat damage
     
     private float lastDamageTime = -100f; // čas posledního damage
     public float damageCooldown = 20f; // cooldown mezi damage (1 sekunda)
+    
+    // Boss Bar
+    public bool isMiniboss = false;
+    public int minibossHealth = 10;
+    private int currentHealth;
+    public Slider bossHealthBar;
+    public GameObject bonusHeartPrefab; // Bonus při smrti
+    
+    private bool isVisible = false;
 
     void Start()
     {
         if (playerTransform == null)
             playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        
+        // Boss bar setup - vždy se snaž najít Slider a hned ho aktivuj
+        currentHealth = isMiniboss ? minibossHealth : 1;
+        if (bossHealthBar == null)
+        {
+            bossHealthBar = FindObjectOfType<Slider>(true);        }
+        
+        if (bossHealthBar != null && isMiniboss)
+        {
+            bossHealthBar.value = 1f;
+            bossHealthBar.gameObject.SetActive(true);
+            // Aktivuj i parent Canvas pokud je deaktivovaný
+            if (bossHealthBar.transform.parent != null)
+            {
+                bossHealthBar.transform.parent.gameObject.SetActive(true);
+            }
+        }
     }
 
     void Update()
     {
+        // Boss bar - pořád viditelný během hry
+        if (isMiniboss && bossHealthBar != null && isVisible)
+        {
+            bossHealthBar.value = currentHealth / (float)minibossHealth;
+        }
+        
         if (canActivate && holeTransform != null && playerTransform != null)
         {
             float distance = Vector2.Distance(
@@ -36,7 +69,8 @@ public class UndergrounderScript : MonoBehaviour
                 if (partToActivate != null)
                 {
                     partToActivate.SetActive(true);
-                    StartCoroutine(WaitBeforeNextActivation()); // spustí čekání hned po aktivaci
+                    isVisible = true;
+                    StartCoroutine(WaitBeforeNextActivation());
                 }
             }
         }
@@ -61,12 +95,20 @@ public class UndergrounderScript : MonoBehaviour
     {
         if (other.CompareTag("Player") && Time.time >= lastDamageTime + damageCooldown)
         {
-            Debug.Log("Undergrounder se dotkl hráče - odebírám život!");
-            PlayerScript player = other.GetComponent<PlayerScript>();
-            if (player != null)
+            if (isMiniboss)
             {
-                player.OdeberZivoty();
-                lastDamageTime = Time.time;
+                TakeDamage(1);
+                Debug.Log("Undergrounder miniboss zasažen! Zdraví: " + currentHealth);
+            }
+            else
+            {
+                Debug.Log("Undergrounder se dotkl hráče - odebírám život!");
+                PlayerScript player = other.GetComponent<PlayerScript>();
+                if (player != null)
+                {
+                    player.OdeberZivoty();
+                    lastDamageTime = Time.time;
+                }
             }
         }
     }
@@ -111,6 +153,46 @@ public class UndergrounderScript : MonoBehaviour
         {
             Debug.Log("Collidery se nedotýkají.");
         }
+    }
+    
+    void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        
+        // Aktualizuj boss bar
+        if (isMiniboss && bossHealthBar != null)
+        {
+            bossHealthBar.value = currentHealth / (float)minibossHealth;
+        }
+        
+        lastDamageTime = Time.time;
+        
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+    
+    void Die()
+    {
+        Debug.Log("Undergrounder miniboss zničen!");
+        
+        // Skryj boss bar
+        if (isMiniboss && bossHealthBar != null)
+        {
+            bossHealthBar.gameObject.SetActive(false);
+        }
+        
+        // Deaktivuj část
+        DeactivatePart();
+        
+        // Spawn bonus
+        if (isMiniboss && bonusHeartPrefab != null)
+        {
+            Instantiate(bonusHeartPrefab, transform.position, Quaternion.identity);
+        }
+        
+        Destroy(gameObject);
     }
     
 }

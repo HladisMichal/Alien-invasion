@@ -20,6 +20,10 @@ public class backgroundScript : MonoBehaviour
 
     void Update()
     {
+        // Pokud je kamera locknutá během boss fightu, nehýbej pozadím
+        if (PlayerScript.cameraLocked)
+            return;
+
         float parallaxX = player.position.x * parallaxSpeed;
 
         // Posuň každé pozadí podle hráče a jeho indexu

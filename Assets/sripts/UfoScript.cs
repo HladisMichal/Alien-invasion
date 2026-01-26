@@ -9,10 +9,27 @@ public class UFOFollowPlayer : MonoBehaviour
     public GameObject laserBodyPrefab;
     public GameObject laserEndPrefab;
 
+    // Kdyz je true, UFO strili laser nepretrzite (pro arenu minibosse)
+    public bool continuousFire = false;
+
+    public Animator animator;
+
     private GameObject currentLaserBody;
     private GameObject currentLaserEnd;
 
     private bool isFiring = false;
+    private bool barrierActive = false;
+    private Coroutine fireCoroutine; // Pro zastavení coroutine
+
+    void Update()
+    {
+        // Pokud je zapnuta kontinuální palba, strilej kazdy frame
+        if (continuousFire)
+        {
+            Fire();
+            return;
+        }
+    }
 
     void Start()
     {
@@ -23,8 +40,12 @@ public class UFOFollowPlayer : MonoBehaviour
     // Spustí střelbu na X sekund
     public void StartFiring()
     {
-        if (!isFiring)
-            StartCoroutine(FireForSeconds(4f));
+        // Pokud je nastavena kontinuální palba, nespoustej casovy burst
+        if (continuousFire)
+            return;
+
+        if (!isFiring && fireCoroutine == null)
+            fireCoroutine = StartCoroutine(FireForSeconds(4f));
     }
 
     private IEnumerator FireForSeconds(float seconds)
@@ -39,8 +60,7 @@ public class UFOFollowPlayer : MonoBehaviour
         }
 
         // po 4 sekundách vypne laser
-        if (currentLaserBody != null) currentLaserBody.SetActive(false);
-        if (currentLaserEnd != null) currentLaserEnd.SetActive(false);
+        HideLaser();
 
         isFiring = false;
     }
@@ -103,6 +123,70 @@ public class UFOFollowPlayer : MonoBehaviour
 
         if (currentLaserBody != null) currentLaserBody.SetActive(true);
         if (currentLaserEnd != null) currentLaserEnd.SetActive(true);
+    }
+
+    public void SetContinuousFire(bool enabled)
+    {
+        continuousFire = enabled;
+        if (!continuousFire)
+        {
+            // Zastavit coroutine střelby
+            if (fireCoroutine != null)
+            {
+                StopCoroutine(fireCoroutine);
+                fireCoroutine = null;
+            }
+            isFiring = false;
+            // Pri vypnuti kontinuální palby okamzite schovej laser
+            HideLaser();
+        }
+    }
+
+    private void HideLaser()
+    {
+        if (currentLaserBody != null) currentLaserBody.SetActive(false);
+        if (currentLaserEnd != null) currentLaserEnd.SetActive(false);
+    }
+
+    // === METODY PRO ANIMATOR A BARIERU ===
+    
+    // Spusti animaci priletu a aktivaci bariery
+    public void ActivateBarrier()
+    {
+        if (barrierActive) return;
+        if (animator != null)
+        {
+            animator.SetTrigger("Prilet");
+        }
+    }
+
+    // Spusti animaci odletu a deaktivaci bariery
+    public void DeactivateBarrier()
+    {
+        if (animator != null)
+        {
+            animator.SetTrigger("Odlet");
+        }
+    }
+
+    // Animation Event - vola se na konci animace Prilet
+    public void OnArrived()
+    {
+        barrierActive = true;
+        SetContinuousFire(true);
+    }
+
+    // Animation Event - vola se na zacatku animace Odlet
+    public void OnDepart()
+    {
+        SetContinuousFire(false);
+        barrierActive = false;
+    }
+
+    // Animation Event - vola se na KONCI animace Odlet
+    public void OnDepartFinished()
+    {
+        gameObject.SetActive(false);
     }
 
     public void DestroyParentUFO()
