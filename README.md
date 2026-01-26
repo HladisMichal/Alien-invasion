@@ -1,7 +1,7 @@
 # Alien invasion
 **Autor:** Michal Hladiš  
-**Vedoucí:** Karel Jindra  
-**Oponent:** Pavel Knotek 
+**Vedoucí:** Mgr. Karel Jindra  
+**Oponent:** Ing. Pavel Knotek 
 
 ## historie commitů 
 [obrázek historie commitů](https://drive.google.com/file/d/1wmJCOq2lw4kphPxnnFCBCrE1VYWcd5uP/view?usp=drive_link)
