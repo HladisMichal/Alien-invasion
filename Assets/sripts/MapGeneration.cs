@@ -22,10 +22,20 @@ public class MapGeneration : MonoBehaviour
     private List<GameObject> activeChunks = new List<GameObject>();
     private int lastChunkIndex = -1;
     private Coroutine ufoSpawnCoroutine;
-    private float nextMilestoneBoss = 2000f; // Příští skóre pro boss chunk
+    private float nextMilestoneBoss = 400f; // Příští skóre pro boss chunk
+    private double maxScoreSoFar = 0;
 
     // Static reference pro přístup z jiných skriptů (miniboss)
     public static MapGeneration instance;
+
+    public void ResetMilestonesForRestart()
+    {
+        nextMilestoneBoss = 400f;
+        maxScoreSoFar = 0;
+        lastMinibossIndex = -1;
+        lastChunkIndex = -1;
+        activeChunks.Clear();
+    }
 
 
     public void RespawnPlatformDelayed(GameObject platform, float delay)
@@ -36,6 +46,9 @@ public class MapGeneration : MonoBehaviour
     private IEnumerator RespawnRoutine(GameObject platform, float delay)
     {
         yield return new WaitForSeconds(delay);
+        if (platform == null)
+            yield break;
+
         platform.SetActive(true);
         // Resetuj pozici a stav platformy
         var script = platform.GetComponent<Platformscript>();
@@ -51,6 +64,13 @@ public class MapGeneration : MonoBehaviour
     {
         // Nastav static referenci
         instance = this;
+
+        ResetMilestonesForRestart();
+
+        if (minibossChunkPrefabs == null || minibossChunkPrefabs.Count == 0)
+        {
+            Debug.LogWarning("Miniboss chunky nejsou nastavené v inspektoru (minibossChunkPrefabs je prázdné). Miniboss se nebude spawnovat.");
+        }
 
         // Spawn první chunk na zacateknahodneho
         int index = Random.Range(0, chunkPrefabs.Count);
@@ -69,6 +89,20 @@ public class MapGeneration : MonoBehaviour
 
     void Update()
     {
+        if (player == null)
+        {
+            var playerScript = FindObjectOfType<PlayerScript>();
+            if (playerScript != null)
+            {
+                player = playerScript.gameObject;
+            }
+        }
+
+        if (PlayerScript.skore > maxScoreSoFar)
+        {
+            maxScoreSoFar = PlayerScript.skore;
+        }
+
         // Pohyb neviditelné stěny (ponechávám)
         if (player != null && invisWall != null)
         {
@@ -88,7 +122,7 @@ public class MapGeneration : MonoBehaviour
                 if (vzdalenost < 20f)
                 {
                     // Kontrola, zda má být spawnnut miniboss chunk
-                    if (PlayerScript.skore >= nextMilestoneBoss && minibossChunkPrefabs != null && minibossChunkPrefabs.Count > 0)
+                    if (maxScoreSoFar >= nextMilestoneBoss && minibossChunkPrefabs != null && minibossChunkPrefabs.Count > 0)
                     {
                         // Vyber náhodný miniboss chunk (jiný než poslední)
                         int newMinibossIndex;
@@ -105,6 +139,7 @@ public class MapGeneration : MonoBehaviour
                             Vector3 offset = newChunk.transform.position - newStart.position;
                             newChunk.transform.position = endPoint.position + offset;
                         }
+                        Debug.Log($"Spawned miniboss chunk: {newChunk.name} (index {newMinibossIndex}) at score {PlayerScript.skore} (max {maxScoreSoFar}).");
                         activeChunks.Add(newChunk);
                         nextMilestoneBoss += 2000f; // Dalších 2000 skóre pro příští boss
                     }

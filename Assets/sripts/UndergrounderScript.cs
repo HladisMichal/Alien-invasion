@@ -15,7 +15,7 @@ public class UndergrounderScript : MonoBehaviour
     public BoxCollider2D damageCollider; // přiřaď v Inspektoru BoxCollider, který má způsobovat damage
     
     private float lastDamageTime = -100f; // čas posledního damage
-    public float damageCooldown = 20f; // cooldown mezi damage (1 sekunda)
+    public float damageCooldown = 0.5f; // cooldown mezi damage
     
     // Boss Bar
     public bool isMiniboss = false;
@@ -25,34 +25,64 @@ public class UndergrounderScript : MonoBehaviour
     public GameObject bonusHeartPrefab; // Bonus při smrti
     
     private bool isVisible = false;
+    
+    // Miniboss emergence mechanic
+    public Transform[] spawnPoints; // GameObjecty kde se může spawnout
+    public GameObject warningIndicatorPrefab; // Vykřičník prefab
+    public float warningDuration = 0.25f; // Jak dlouho se má čekat než se spawne miniboss
+    public Transform mainUndergrounderParent; // Hlavní parent GameObject který se má přesouvat
+    public Transform undergrounderSprite; // Child GameObject s animací spriteu
+    private Animator animator;
+    private Animator spriteAnimator; // Animator na undergroundersprite
+    private Vector3 offsetFromParentToHole; // Rozdíl mezi parentem a hole
 
     void Start()
     {
         if (playerTransform == null)
             playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         
-        // Boss bar setup - vždy se snaž najít Slider a hned ho aktivuj
-        currentHealth = isMiniboss ? minibossHealth : 1;
-        if (bossHealthBar == null)
-        {
-            bossHealthBar = FindObjectOfType<Slider>(true);        }
+        // Pokud není nastaven parent, použij transform tohoto objektu
+        if (mainUndergrounderParent == null)
+            mainUndergrounderParent = transform;
         
-        if (bossHealthBar != null && isMiniboss)
+        // Zapamatuj si rozdíl mezi parentem a hole (pokud existuje)
+        if (holeTransform != null)
+            offsetFromParentToHole = holeTransform.position - mainUndergrounderParent.position;
+        
+        animator = GetComponent<Animator>();
+        
+        // Najdi animator na undergroundersprite
+        if (undergrounderSprite != null)
         {
-            bossHealthBar.value = 1f;
-            bossHealthBar.gameObject.SetActive(true);
-            // Aktivuj i parent Canvas pokud je deaktivovaný
-            if (bossHealthBar.transform.parent != null)
+            spriteAnimator = undergrounderSprite.GetComponent<Animator>();
+        }
+        
+        // Boss bar setup - POUZE na hlavním undergrounder parent objektu
+        if (mainUndergrounderParent == transform)
+        {
+            currentHealth = isMiniboss ? minibossHealth : 1;
+            if (bossHealthBar == null)
             {
-                bossHealthBar.transform.parent.gameObject.SetActive(true);
+                bossHealthBar = FindObjectOfType<Slider>(true);
+            }
+            
+            if (bossHealthBar != null && isMiniboss)
+            {
+                bossHealthBar.value = 1f;
+                bossHealthBar.gameObject.SetActive(true);
+                // Aktivuj i parent Canvas pokud je deaktivovaný
+                if (bossHealthBar.transform.parent != null)
+                {
+                    bossHealthBar.transform.parent.gameObject.SetActive(true);
+                }
             }
         }
     }
 
     void Update()
     {
-        // Boss bar - pořád viditelný během hry
-        if (isMiniboss && bossHealthBar != null && isVisible)
+        // Boss bar - pořád viditelný během hry - JEN na hlavním undergrounder parent
+        if (isMiniboss && bossHealthBar != null && isVisible && mainUndergrounderParent == transform)
         {
             bossHealthBar.value = currentHealth / (float)minibossHealth;
         }
@@ -70,6 +100,11 @@ public class UndergrounderScript : MonoBehaviour
                 {
                     partToActivate.SetActive(true);
                     isVisible = true;
+                    
+                    // Pro minibossa zapni damage collider hned na začátku emergence
+                    if (isMiniboss && damageCollider != null)
+                        damageCollider.enabled = true;
+                    
                     StartCoroutine(WaitBeforeNextActivation());
                 }
             }
@@ -93,16 +128,19 @@ public class UndergrounderScript : MonoBehaviour
     // Automatická detekce kolize - volá se okamžitě při dotyku
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && Time.time >= lastDamageTime + damageCooldown)
+        // Pokud je script na child objektu a parent má taky script, nespustí se zde
+        if (transform.parent != null && transform.parent.GetComponent<UndergrounderScript>() != null)
         {
-            if (isMiniboss)
+            // ALE PRO PROJEKTILY POKRAČUJEME
+            if (!other.CompareTag("Projectile"))
+                return;
+        }
+        
+        if (other.CompareTag("Player"))
+        {
+            // Zkontroluj cooldown - aby se damage dal jen jednou
+            if (Time.time >= lastDamageTime + damageCooldown)
             {
-                TakeDamage(1);
-                Debug.Log("Undergrounder miniboss zasažen! Zdraví: " + currentHealth);
-            }
-            else
-            {
-                Debug.Log("Undergrounder se dotkl hráče - odebírám život!");
                 PlayerScript player = other.GetComponent<PlayerScript>();
                 if (player != null)
                 {
@@ -111,19 +149,27 @@ public class UndergrounderScript : MonoBehaviour
                 }
             }
         }
-    }
-
-    // Kontinuální kontrola - volá se každý frame když jsou v kontaktu
-    void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.CompareTag("Player") && Time.time >= lastDamageTime + damageCooldown)
+        
+        // JEN miniboss dostává damage od projektilů
+        if (other.CompareTag("Projectile"))
         {
-            Debug.Log("Undergrounder stále v kontaktu s hráčem - odebírám život!");
-            PlayerScript player = other.GetComponent<PlayerScript>();
-            if (player != null)
+            // Najdi parent script pokud existuje
+            UndergrounderScript targetScript = this;
+            if (transform.parent != null)
             {
-                player.OdeberZivoty();
-                lastDamageTime = Time.time;
+                UndergrounderScript parentScript = transform.parent.GetComponent<UndergrounderScript>();
+                if (parentScript != null)
+                {
+                    if (parentScript.isMiniboss)
+                        targetScript = parentScript;
+                }
+            }
+            
+            // Zpracuj damage jen pokud je miniboss a jsme na hlavním undergrounder parent objektu
+            if (targetScript.isMiniboss && targetScript.mainUndergrounderParent == targetScript.transform)
+            {
+                targetScript.TakeDamage(1);
+                Destroy(other.gameObject); // Zniči projektil
             }
         }
     }
@@ -141,17 +187,11 @@ public class UndergrounderScript : MonoBehaviour
         Collider2D playerCollider = playerTransform.GetComponent<Collider2D>();
         if (playerCollider != null && damageCollider.IsTouching(playerCollider))
         {
-            Debug.Log("Collidery se dotýkají, odebrání životů.");
             PlayerScript player = playerTransform.GetComponent<PlayerScript>();
             if (player != null)
             {
-                Debug.Log("Odebírám životy hráči.");
                 player.OdeberZivoty();
             }
-        }
-        else
-        {
-            Debug.Log("Collidery se nedotýkají.");
         }
     }
     
@@ -175,8 +215,6 @@ public class UndergrounderScript : MonoBehaviour
     
     void Die()
     {
-        Debug.Log("Undergrounder miniboss zničen!");
-        
         // Skryj boss bar
         if (isMiniboss && bossHealthBar != null)
         {
@@ -186,13 +224,119 @@ public class UndergrounderScript : MonoBehaviour
         // Deaktivuj část
         DeactivatePart();
         
+        // Ukončí boss fight (vrátí kameru a deaktivuje UFO)
+        if (isMiniboss)
+        {
+            minibossScript miniboss = FindObjectOfType<minibossScript>();
+            if (miniboss != null)
+            {
+                miniboss.DeaktivujBariery();
+            }
+        }
+        
         // Spawn bonus
         if (isMiniboss && bonusHeartPrefab != null)
         {
-            Instantiate(bonusHeartPrefab, transform.position, Quaternion.identity);
+            Instantiate(bonusHeartPrefab, new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), Quaternion.identity);
         }
         
         Destroy(gameObject);
+    }
+    
+    // === MINIBOSS ANIMATION EVENTS ===
+    
+    // Zavolej z Animation Event na konci Emerge animace
+    public void OnMinibossEmergeComplete()
+    {
+        if (damageCollider != null)
+            damageCollider.enabled = true;
+    }
+    
+    // Zavolej z Animation Event na konci vulnerable fáze (před Hide)
+    public void OnMinibossVulnerableEnd()
+    {
+        if (damageCollider != null)
+            damageCollider.enabled = false;
+    }
+    
+    // Zavolaj z Animation Event na konci Hide animace
+    public void OnMinibossHideComplete()
+    {
+        StartCoroutine(ReappearAfterHide());
+    }
+    
+    private IEnumerator ReappearAfterHide()
+    {
+        // 1. Přesuň doleva o 50 od hráče (místo -500)
+        Vector3 originalPos = mainUndergrounderParent.position;
+        float originalZ = originalPos.z; // Zapamatuj si původní Z
+        mainUndergrounderParent.position = new Vector3(playerTransform.position.x - 50f, originalPos.y, originalZ);
+        isVisible = false;
+        
+        // 2. Počkej náhodně mezi 1-3 sekundami
+        float randomWait = Random.Range(1f, 3f);
+        yield return new WaitForSeconds(randomWait);
+        
+        // 3. Zjisti finální spawn pozici
+        Vector3 spawnPos = originalPos;
+        if (playerTransform != null)
+        {
+            // Pokud máš spawn points, vezmi nejbližší k hráči
+            if (spawnPoints != null && spawnPoints.Length > 0)
+            {
+                Transform closestPoint = spawnPoints[0];
+                float minDistance = Vector2.Distance(playerTransform.position, closestPoint.position);
+                
+                foreach (Transform point in spawnPoints)
+                {
+                    float distance = Vector2.Distance(playerTransform.position, point.position);
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        closestPoint = point;
+                    }
+                }
+                
+                // Spawn point pozice - offset, ZACHOVEJ PŮVODNÍ Z
+                Vector3 newPos = closestPoint.position - offsetFromParentToHole;
+                spawnPos = new Vector3(newPos.x, newPos.y, originalZ);
+            }
+            else
+            {
+                // Jinak přímo pod hráčem - jen X, zachovej původní Y a Z
+                spawnPos = new Vector3(
+                    playerTransform.position.x - offsetFromParentToHole.x,
+                    originalPos.y,
+                    originalZ
+                );
+            }
+        }
+        
+        // 4. Spawni vykřičník na finální pozici
+        GameObject warningInstance = null;
+        if (warningIndicatorPrefab != null)
+        {
+            warningInstance = Instantiate(warningIndicatorPrefab, new Vector3(spawnPos.x, spawnPos.y + 1f, spawnPos.z), Quaternion.identity);
+        }
+        
+        // 5. Počkej warning dobu
+        yield return new WaitForSeconds(warningDuration);
+        
+        // 6. Smaž vykřičník
+        if (warningInstance != null)
+            Destroy(warningInstance);
+        
+        // 7. Teleportuj minibossa na finální pozici
+        mainUndergrounderParent.position = spawnPos;
+        
+        // 8. Restart animace od začátku
+        if (animator != null)
+            animator.Play(0, -1, 0f);
+        
+        if (spriteAnimator != null)
+            spriteAnimator.Play(0, -1, 0f);
+        
+        isVisible = true;
     }
     
 }

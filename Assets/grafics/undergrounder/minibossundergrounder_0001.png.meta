@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ac632b3af74884242b22efcbe376ebe2
+guid: f97028dc478612740a2ffbf9271609af
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8435942046356645176
-    second: player-positions_0001_0
+      213: -7679253699596430038
+    second: minibossundergrounder_0001_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player-positions_0001_0
+      name: minibossundergrounder_0001_0
       rect:
         serializedVersion: 2
-        x: 142
-        y: 188
-        width: 338
-        height: 566
-      alignment: 9
-      pivot: {x: 0.4897069, y: 0.4200934}
+        x: 6
+        y: 8
+        width: 49
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8ca512587638dea80800000000000000
-      internalID: -8435942046356645176
+      spriteID: a255377527fcd6590800000000000000
+      internalID: -7679253699596430038
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 6d326536e2f99684680ae5dcc12eefae
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -147,8 +147,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      player-positions_0001_0: -8435942046356645176
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

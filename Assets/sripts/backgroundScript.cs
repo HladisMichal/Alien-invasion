@@ -15,13 +15,31 @@ public class backgroundScript : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
             backgrounds[i] = transform.GetChild(i);
 
-        length = backgrounds[0].GetComponent<SpriteRenderer>().bounds.size.x - offset;
+        if (backgrounds.Length == 0 || backgrounds[0] == null)
+        {
+            Debug.LogWarning("backgroundScript: žádné child pozadí nebylo nalezeno.");
+            length = 0f;
+            return;
+        }
+
+        var renderer = backgrounds[0].GetComponent<SpriteRenderer>();
+        if (renderer == null)
+        {
+            Debug.LogWarning("backgroundScript: chybí SpriteRenderer na prvním pozadí.");
+            length = 0f;
+            return;
+        }
+
+        length = renderer.bounds.size.x - offset;
     }
 
     void Update()
     {
         // Pokud je kamera locknutá během boss fightu, nehýbej pozadím
         if (PlayerScript.cameraLocked)
+            return;
+
+        if (player == null || length == 0f || backgrounds == null || backgrounds.Length == 0)
             return;
 
         float parallaxX = player.position.x * parallaxSpeed;

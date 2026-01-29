@@ -50,6 +50,19 @@ public class PlayerScript : MonoBehaviour
 
     public Transform firePoint; // nastav v Inspectoru na FirePoint (child hráče)
 
+    private Vector2 lastAimDirection = Vector2.right;
+
+    public SpriteRenderer playerSprite;
+
+    public Vector2 firePointRight = new Vector2(0.6f, 0.1f);
+    public Vector2 firePointLeft = new Vector2(-0.6f, 0.1f);
+    public Vector2 firePointUp = new Vector2(0f, 0.7f);
+    public Vector2 firePointDown = new Vector2(0f, -0.4f);
+    public Vector2 firePointUpRight = new Vector2(0.5f, 0.5f);
+    public Vector2 firePointUpLeft = new Vector2(-0.5f, 0.5f);
+    public Vector2 firePointDownRight = new Vector2(0.5f, -0.3f);
+    public Vector2 firePointDownLeft = new Vector2(-0.5f, -0.3f);
+
     // Dash systém
     public float dashDistance = 25f; // vzdálenost dashe v jednotkách - upravitelná v Inspectoru  
     public float dashSpeed = 30f; // rychlost dashe - upravitelná v Inspectoru
@@ -74,6 +87,11 @@ public class PlayerScript : MonoBehaviour
         cameraLocked = false; // Reset camera lock při startu
         UpdateHearts(); 
         scale = player.transform.localScale.x;
+        lastAimDirection = scale >= 0 ? Vector2.right : Vector2.left;
+        if (playerSprite == null && player != null)
+        {
+            playerSprite = player.GetComponentInChildren<SpriteRenderer>();
+        }
         if (player != null)
         {
             rb = player.GetComponent<Rigidbody2D>();
@@ -163,12 +181,14 @@ public class PlayerScript : MonoBehaviour
         }
 
 
-            float move = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
+            bool verticalAimHeld = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S);
+            float moveInput = verticalAimHeld ? 0f : (Input.GetKey(KeyCode.D) ? 1f : 0f) - (Input.GetKey(KeyCode.A) ? 1f : 0f);
+            float move = moveInput * moveSpeed * Time.deltaTime;
             player.transform.Translate(move, 0, 0);
 
             if (animator != null)
             {
-                animator.SetFloat("Speed", Mathf.Abs(move));
+                animator.SetFloat("Speed", Mathf.Abs(moveInput));
             }
 
             // Skákání přes dva Raycasty těsně NAD spodní hranou collideru (levý a pravý roh)
@@ -185,12 +205,20 @@ if (Input.GetButtonDown("Jump") && rb != null && GetIsGrounded() && Mathf.Abs(rb
 
             if (move > 0)
             {
-                player.transform.localScale = new Vector3(scale, scale, 1);
+                if (lastAimDirection.x == 0 && lastAimDirection.y == 0)
+                    lastAimDirection = Vector2.right;
+                if (playerSprite != null)
+                    playerSprite.flipX = false;
             }
             else if (move < 0)
             {
-                player.transform.localScale = new Vector3(-scale, scale, 1);
+                if (lastAimDirection.x == 0 && lastAimDirection.y == 0)
+                    lastAimDirection = Vector2.left;
+                if (playerSprite != null)
+                    playerSprite.flipX = true;
             }
+
+            UpdateAimDirection();
 
             // Kontrola, zda je stisknuta klávesa "Control" pro průchod dolů
             if (Input.GetKeyDown(KeyCode.LeftControl) && onPlatform && platformCollider != null)
@@ -230,18 +258,9 @@ if (Input.GetButtonDown("Jump") && rb != null && GetIsGrounded() && Mathf.Abs(rb
         {
             Vector3 spawnPos = firePoint.position;
 
-            // Zjisti vzdálenost kamery od scény (většinou -10 pro 2D)
-            float zDistance = Mathf.Abs(kamera.transform.position.z - spawnPos.z);
-
-            // Převod myši na světové souřadnice ve stejné rovině jako firePoint
-            Vector3 mouseWorld = kamera.ScreenToWorldPoint(new Vector3(
-                Input.mousePosition.x,
-                Input.mousePosition.y,
-                zDistance
-            ));
-            mouseWorld.z = spawnPos.z; // sjednotíme Z
-
-            Vector2 direction = (mouseWorld - spawnPos).normalized;
+            Vector2 direction = lastAimDirection.normalized;
+            if (direction == Vector2.zero)
+                direction = Vector2.right;
 
             GameObject bullet = Instantiate(strelaPrefab, spawnPos, Quaternion.identity);
             Bulletscript bs = bullet.GetComponent<Bulletscript>();
@@ -253,6 +272,63 @@ if (Input.GetButtonDown("Jump") && rb != null && GetIsGrounded() && Mathf.Abs(rb
 }
         }
 
+    }
+
+    void UpdateAimDirection()
+    {
+        int dirX = 0;
+        int dirY = 0;
+        if (Input.GetKey(KeyCode.D)) dirX += 1;
+        if (Input.GetKey(KeyCode.A)) dirX -= 1;
+        if (Input.GetKey(KeyCode.W)) dirY += 1;
+        if (Input.GetKey(KeyCode.S)) dirY -= 1;
+
+        Vector2 aimInput = new Vector2(dirX, dirY);
+        if (aimInput != Vector2.zero)
+        {
+            lastAimDirection = aimInput.normalized;
+            if (firePoint != null)
+            {
+                firePoint.right = new Vector3(lastAimDirection.x, lastAimDirection.y, 0f);
+            }
+            ApplyAimOffsets(dirX, dirY);
+            if (animator != null)
+            {
+                float animMoveX = Mathf.Abs(dirX);
+                animator.SetFloat("MoveX", animMoveX);
+                animator.SetFloat("MoveY", dirY);
+            }
+            if (playerSprite != null && dirX != 0)
+            {
+                playerSprite.flipX = dirX < 0;
+            }
+        }
+    }
+
+    void ApplyAimOffsets(int dirX, int dirY)
+    {
+        if (firePoint != null)
+        {
+            Vector2 offset = firePointRight;
+            if (dirX > 0 && dirY == 0) offset = firePointRight;
+            else if (dirX < 0 && dirY == 0) offset = firePointLeft;
+            else if (dirX == 0 && dirY > 0) offset = firePointUp;
+            else if (dirX == 0 && dirY < 0) offset = firePointDown;
+            else if (dirX > 0 && dirY > 0) offset = firePointUpRight;
+            else if (dirX < 0 && dirY > 0) offset = firePointUpLeft;
+            else if (dirX > 0 && dirY < 0) offset = firePointDownRight;
+            else if (dirX < 0 && dirY < 0) offset = firePointDownLeft;
+
+            if (dirX == 0 && dirY != 0)
+            {
+                if (playerSprite != null && playerSprite.flipX)
+                {
+                    offset.x = -offset.x;
+                }
+            }
+
+            firePoint.localPosition = new Vector3(offset.x, offset.y, firePoint.localPosition.z);
+        }
     }
 
     private bool GetIsGrounded()
@@ -399,8 +475,14 @@ void OnTriggerEnter2D(Collider2D other)
             }
            public void RestartGame()
             {
+                skore = 0;
+                akceSkore = 0;
                 Time.timeScale = 1;
                 cameraLocked = false; // Unlock kamery při restartu
+                if (MapGeneration.instance != null)
+                {
+                    MapGeneration.instance.ResetMilestonesForRestart();
+                }
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
 
