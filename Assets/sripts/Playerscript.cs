@@ -33,6 +33,7 @@ public class PlayerScript : MonoBehaviour
     public GameObject deathZone; 
 
     public Button restartButton;
+    public Button exitButton;
     
     public Tilemap groundTilemap; // Volitelné: jedna Tilemap (když je nastavena, použije se přímo)
     public bool autoFindTilemaps = true; // Když není nastavena, najdeme Tilemapy automaticky ve scéně
@@ -155,6 +156,8 @@ public class PlayerScript : MonoBehaviour
                 }
                 if (restartButton != null)
                     restartButton.gameObject.SetActive(true);
+                if (exitButton != null)
+                    exitButton.gameObject.SetActive(true);
 
                 Destroy(player); 
                 Time.timeScale = 0; 

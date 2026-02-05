@@ -4,6 +4,18 @@ using UnityEngine.SceneManagement;
 public class SceneManagerscript : MonoBehaviour
 {
         public GameObject pauseMenuUI; // Nastav v Inspectoru na panel s pauzovacím menu
+    private bool isPaused = false;
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused)
+                ResumeGame();
+            else
+                PauseGame();
+        }
+    }
     // Přepne na scénu s názvem "Game"
     public void LoadGame()
     {
@@ -42,6 +54,7 @@ public class SceneManagerscript : MonoBehaviour
     {
         Time.timeScale = 0f;
         if (pauseMenuUI) pauseMenuUI.SetActive(true);
+            isPaused = true;
     }
 
     // Pokračuje ve hře a skryje menu
@@ -49,6 +62,7 @@ public class SceneManagerscript : MonoBehaviour
     {
         Time.timeScale = 1f;
         if (pauseMenuUI) pauseMenuUI.SetActive(false);
+        isPaused = false;
     }
 
     /*// Uloží hlasitost hudby a zvuků do PlayerPrefs

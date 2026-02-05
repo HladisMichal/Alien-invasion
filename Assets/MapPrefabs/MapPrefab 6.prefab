@@ -47,7 +47,7 @@ Tilemap:
   m_GameObject: {fileID: 462457210074018695}
   m_Enabled: 1
   m_Tiles:
-  - first: {x: 641, y: 186, z: 0}
+  - first: {x: 640, y: 186, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 4
@@ -57,7 +57,7 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: 642, y: 186, z: 0}
+  - first: {x: 641, y: 186, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 5
@@ -281,20 +281,20 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 798774497799716812}
     m_ColliderPaths:
-    - - X: 6430070272
+    - - X: 6420070400
         Y: 1870000000
-      - X: 6409999872
+      - X: 6400000000
         Y: 1870000000
-      - X: 6409999872
+      - X: 6400000000
         Y: 1864999936
-      - X: 6430070272
+      - X: 6420070400
         Y: 1864999936
   m_CompositePaths:
     m_Paths:
-    - - {x: 643.00696, y: 186.5}
-      - {x: 643.00696, y: 187}
-      - {x: 641, y: 186.99997}
-      - {x: 641.00006, y: 186.5}
+    - - {x: 642.007, y: 186.5}
+      - {x: 642.007, y: 187}
+      - {x: 640, y: 186.99997}
+      - {x: 640.00006, y: 186.5}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -562,9 +562,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 881370adbd8c3804f920ec57b069d04b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMiniboss: 0
+  normalHealth: 1
+  minibossHealth: 10
   enemyProjectilePrefab: {fileID: 2332787221070375762, guid: 4e5e831684e8ef44ab68da323aac02d9, type: 3}
   fireRate: 4
   ufo_prefab: {fileID: 0}
+  bossHealthBar: {fileID: 0}
+  bonusHeartPrefab: {fileID: 0}
+  teleportPositions: []
+  teleportCooldown: 5
+  minDistanceFromPlayer: 0.2
 --- !u!1 &2590520133441250184
 GameObject:
   m_ObjectHideFlags: 0
@@ -2462,6 +2470,7 @@ Transform:
   - {fileID: 1941761259830978224}
   - {fileID: 5391118157339223845}
   - {fileID: 6133458873367683889}
+  - {fileID: 7674520360161605669}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!156049354 &4989541497503458401
@@ -3577,7 +3586,7 @@ Transform:
   m_GameObject: {fileID: 6681403342308489247}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 641.96, y: 187.77, z: 349.80078}
+  m_LocalPosition: {x: 640.72, y: 187.77, z: 349.80078}
   m_LocalScale: {x: 0.29999998, y: 0.29999998, z: 0.96485996}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -3723,9 +3732,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 881370adbd8c3804f920ec57b069d04b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMiniboss: 0
+  normalHealth: 1
+  minibossHealth: 10
   enemyProjectilePrefab: {fileID: 2332787221070375762, guid: 4e5e831684e8ef44ab68da323aac02d9, type: 3}
   fireRate: 4
   ufo_prefab: {fileID: 0}
+  bossHealthBar: {fileID: 0}
+  bonusHeartPrefab: {fileID: 0}
+  teleportPositions: []
+  teleportCooldown: 5
+  minDistanceFromPlayer: 0.2
 --- !u!1 &6775936525687201233
 GameObject:
   m_ObjectHideFlags: 0
@@ -4613,9 +4630,79 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 881370adbd8c3804f920ec57b069d04b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMiniboss: 0
+  normalHealth: 1
+  minibossHealth: 10
   enemyProjectilePrefab: {fileID: 2332787221070375762, guid: 4e5e831684e8ef44ab68da323aac02d9, type: 3}
   fireRate: 4
   ufo_prefab: {fileID: 0}
+  bossHealthBar: {fileID: 0}
+  bonusHeartPrefab: {fileID: 0}
+  teleportPositions: []
+  teleportCooldown: 5
+  minDistanceFromPlayer: 0.2
+--- !u!1001 &13470565576758915
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 358906826584382403}
+    m_Modifications:
+    - target: {fileID: 4126270867854961622, guid: 79fa039f5751f554d959548bcba1079f, type: 3}
+      propertyPath: m_Name
+      value: Rusher
+      objectReference: {fileID: 0}
+    - target: {fileID: 7687227794334363302, guid: 79fa039f5751f554d959548bcba1079f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 649.12854
+      objectReference: {fileID: 0}
+    - target: {fileID: 7687227794334363302, guid: 79fa039f5751f554d959548bcba1079f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 184.83774
+      objectReference: {fileID: 0}
+    - target: {fileID: 7687227794334363302, guid: 79fa039f5751f554d959548bcba1079f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7687227794334363302, guid: 79fa039f5751f554d959548bcba1079f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7687227794334363302, guid: 79fa039f5751f554d959548bcba1079f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7687227794334363302, guid: 79fa039f5751f554d959548bcba1079f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7687227794334363302, guid: 79fa039f5751f554d959548bcba1079f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7687227794334363302, guid: 79fa039f5751f554d959548bcba1079f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7687227794334363302, guid: 79fa039f5751f554d959548bcba1079f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7687227794334363302, guid: 79fa039f5751f554d959548bcba1079f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 79fa039f5751f554d959548bcba1079f, type: 3}
+--- !u!4 &7674520360161605669 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7687227794334363302, guid: 79fa039f5751f554d959548bcba1079f, type: 3}
+  m_PrefabInstance: {fileID: 13470565576758915}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1390711471083389796
 PrefabInstance:
   m_ObjectHideFlags: 0
