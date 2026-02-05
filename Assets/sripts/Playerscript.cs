@@ -491,48 +491,26 @@ void OnTriggerEnter2D(Collider2D other)
 
             void StartDash()
             {
-                if (player == null) return;
+                if (player == null || rb == null) return;
 
-                // Určí směr dashe podle toho, kam se hráč dívá
-                float direction = player.transform.localScale.x > 0 ? 1f : -1f;
+                float direction = playerSprite != null && playerSprite.flipX ? -1f : 1f;
+                rb.velocity = new Vector2(direction * dashSpeed, rb.velocity.y);
 
-                // Nastavení start a cílové pozice
-                dashStart = player.transform.position;
-                dashTarget = dashStart;
-                dashTarget.x += direction * dashDistance;
-
-                // Spuštění dashe
                 isDashing = true;
                 lastDashTime = Time.time;
 
-                Debug.Log("Dash začíná! Směr: " + (direction > 0 ? "doprava" : "doleva") + ", vzdálenost: " + dashDistance);
+                Debug.Log("Dash! Směr: " + (direction > 0 ? "doprava" : "doleva"));
             }
 
             void UpdateDash()
             {
-                if (!isDashing || player == null) return;
+                if (!isDashing || player == null || rb == null) return;
 
-                // Pohyb jen v horizontálním směru - Y pozici necháváme být
-                Vector3 currentPos = player.transform.position;
-                Vector3 horizontalTarget = new Vector3(dashTarget.x, currentPos.y, currentPos.z);
-                
-                player.transform.position = Vector3.MoveTowards(
-                    currentPos, 
-                    horizontalTarget, 
-                    dashSpeed * Time.deltaTime
-                );
-
-                // Kontrola jestli jsme došli k cíli - kontrolujeme jen horizontální vzdálenost
-                float horizontalDistance = Mathf.Abs(player.transform.position.x - dashTarget.x);
-                if (horizontalDistance < 0.1f)
+                if (Time.time - lastDashTime >= 0.3f)
                 {
-                    // Nastavíme jen X pozici na přesnou hodnotu
-                    Vector3 finalPos = player.transform.position;
-                    finalPos.x = dashTarget.x;
-                    player.transform.position = finalPos;
-                    
                     isDashing = false;
-                    Debug.Log("Dash dokončen!");
+                    rb.velocity = new Vector2(0, rb.velocity.y);
+                    Debug.Log("Dash skončil!");
                 }
             }
 

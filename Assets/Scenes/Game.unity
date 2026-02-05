@@ -155,7 +155,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -300, y: -207}
+  m_AnchoredPosition: {x: -300, y: -220}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &78785048
@@ -304,8 +304,8 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_ScreenMatchMode: 1
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -3263,8 +3263,8 @@ Tilemap:
   - first: {x: 397, y: 184, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 10
-      m_TileSpriteIndex: 8
+      m_TileIndex: 6
+      m_TileSpriteIndex: 6
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -3273,8 +3273,8 @@ Tilemap:
   - first: {x: 398, y: 184, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 17
-      m_TileSpriteIndex: 14
+      m_TileIndex: 6
+      m_TileSpriteIndex: 6
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -3424,7 +3424,7 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 4
     m_Data: {fileID: 11400000, guid: fc4060b067dd40346930f64c7c48f178, type: 2}
-  - m_RefCount: 54
+  - m_RefCount: 56
     m_Data: {fileID: 11400000, guid: 8568b333f2747f243a64f7d4d7115ceb, type: 2}
   - m_RefCount: 0
     m_Data: {fileID: 0}
@@ -3432,7 +3432,7 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 3
     m_Data: {fileID: 11400000, guid: d5a9a9a7c63211248a200d4c424627c1, type: 2}
-  - m_RefCount: 2
+  - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: d0288e82c766566498da598be2238961, type: 2}
   - m_RefCount: 0
     m_Data: {fileID: 0}
@@ -3446,7 +3446,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: b9f09ac718960814090a28df5bb90d36, type: 2}
   - m_RefCount: 72
     m_Data: {fileID: 11400000, guid: 6426f62176bd7664d85ac1ca4b5314b6, type: 2}
-  - m_RefCount: 2
+  - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 79706d62fd0dcdb4fbdf26179502bb9a, type: 2}
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: 79d66cb0eb4774d49aea155cac6a9b87, type: 2}
@@ -3465,11 +3465,11 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 54
+  - m_RefCount: 56
     m_Data: {fileID: -656580661, guid: 5b60bc3606ea49c4a85c5733af8b4f9c, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 2
+  - m_RefCount: 1
     m_Data: {fileID: 889979463, guid: 5b60bc3606ea49c4a85c5733af8b4f9c, type: 3}
   - m_RefCount: 3
     m_Data: {fileID: 887583615, guid: 5b60bc3606ea49c4a85c5733af8b4f9c, type: 3}
@@ -3481,7 +3481,7 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 3
     m_Data: {fileID: 1644490158, guid: 5b60bc3606ea49c4a85c5733af8b4f9c, type: 3}
-  - m_RefCount: 2
+  - m_RefCount: 1
     m_Data: {fileID: 236853280, guid: 5b60bc3606ea49c4a85c5733af8b4f9c, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: -653118597, guid: 5b60bc3606ea49c4a85c5733af8b4f9c, type: 3}
@@ -4402,7 +4402,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 300, y: -207}
+  m_AnchoredPosition: {x: 300, y: -220}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1322420241
@@ -4823,9 +4823,9 @@ RectTransform:
   - {fileID: 1447047025}
   m_Father: {fileID: 165136110}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 67.79999, y: -940}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -886, y: -467}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1467564317
@@ -5348,7 +5348,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -897, y: -293}
+  m_AnchoredPosition: {x: -892, y: -329}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &1672183242 stripped

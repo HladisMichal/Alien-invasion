@@ -41,7 +41,11 @@ public class SceneManagerscript : MonoBehaviour
         SceneManager.LoadScene("Tutorial");
     }
 
-    // Ukončí hru (funguje v buildu, v editoru zastaví přehrávání)
+    public void LoadStatistic()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Statistic");
+    }
     public void QuitGame()
     {
         #if UNITY_EDITOR

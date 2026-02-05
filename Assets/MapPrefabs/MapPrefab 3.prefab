@@ -573,9 +573,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 881370adbd8c3804f920ec57b069d04b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMiniboss: 0
+  normalHealth: 1
+  minibossHealth: 10
   enemyProjectilePrefab: {fileID: 2332787221070375762, guid: 4e5e831684e8ef44ab68da323aac02d9, type: 3}
   fireRate: 4
   ufo_prefab: {fileID: 0}
+  bossHealthBar: {fileID: 0}
+  bonusHeartPrefab: {fileID: 0}
+  teleportPositions: []
+  teleportCooldown: 5
+  minDistanceFromPlayer: 0.2
 --- !u!1 &6147407027669739163
 GameObject:
   m_ObjectHideFlags: 0
@@ -1235,8 +1243,8 @@ Tilemap:
   - first: {x: 526, y: 184, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 6
-      m_TileSpriteIndex: 5
+      m_TileIndex: 0
+      m_TileSpriteIndex: 0
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -1584,7 +1592,7 @@ Tilemap:
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 19
+  - m_RefCount: 20
     m_Data: {fileID: 11400000, guid: 8568b333f2747f243a64f7d4d7115ceb, type: 2}
   - m_RefCount: 4
     m_Data: {fileID: 11400000, guid: b9f09ac718960814090a28df5bb90d36, type: 2}
@@ -1596,7 +1604,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: e8bba5bb7e8fa1d46aa805678f880288, type: 2}
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: 891f945d4c525da4a9410ccc0b24c9aa, type: 2}
-  - m_RefCount: 3
+  - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: 79706d62fd0dcdb4fbdf26179502bb9a, type: 2}
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: f0fb0ca1ebf3ce54a913b3c9f496168f, type: 2}
@@ -1623,7 +1631,7 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 7ddd63038780fa94c9177a51055b6415, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 19
+  - m_RefCount: 20
     m_Data: {fileID: -656580661, guid: 5b60bc3606ea49c4a85c5733af8b4f9c, type: 3}
   - m_RefCount: 6
     m_Data: {fileID: 887583615, guid: 5b60bc3606ea49c4a85c5733af8b4f9c, type: 3}
@@ -1633,7 +1641,7 @@ Tilemap:
     m_Data: {fileID: 1644490158, guid: 5b60bc3606ea49c4a85c5733af8b4f9c, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: -1258183084, guid: 5b60bc3606ea49c4a85c5733af8b4f9c, type: 3}
-  - m_RefCount: 3
+  - m_RefCount: 2
     m_Data: {fileID: 236853280, guid: 5b60bc3606ea49c4a85c5733af8b4f9c, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 889979463, guid: 5b60bc3606ea49c4a85c5733af8b4f9c, type: 3}
