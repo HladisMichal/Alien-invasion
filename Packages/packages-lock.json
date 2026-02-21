@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.lootlocker.lootlockersdk": {
+      "version": "https://github.com/LootLocker/unity-sdk.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "174f6999fe21e17722e77804f0022a124866446b"
+    },
     "com.unity.2d.animation": {
       "version": "10.1.4",
       "depth": 1,
@@ -276,9 +283,9 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.modules.androidjni": "1.0.0",
         "com.unity.nuget.newtonsoft-json": "3.2.1",
-        "com.unity.modules.androidjni": "1.0.0"
+        "com.unity.modules.unitywebrequest": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },

@@ -32,8 +32,7 @@ public class PlayerScript : MonoBehaviour
     public UnityEngine.UI.Text GameOverText;
     public GameObject deathZone; 
 
-    public Button restartButton;
-    public Button exitButton;
+    public GameObject deathUI; 
     
     public Tilemap groundTilemap; // Volitelné: jedna Tilemap (když je nastavena, použije se přímo)
     public bool autoFindTilemaps = true; // Když není nastavena, najdeme Tilemapy automaticky ve scéně
@@ -153,11 +152,13 @@ public class PlayerScript : MonoBehaviour
                 if(GameOverText != null){
                 GameOverText.gameObject.SetActive(true);
                 GameOverText.text = "Konec hry!  Maximální skóre: " + Mathf.Round((float)maxskore);
+                PlayerPrefs.SetInt("LastScore", Mathf.RoundToInt((float)maxskore));
+                PlayerPrefs.Save(); 
                 }
-                if (restartButton != null)
-                    restartButton.gameObject.SetActive(true);
-                if (exitButton != null)
-                    exitButton.gameObject.SetActive(true);
+                if (deathUI != null)
+                {
+                    deathUI.SetActive(true);
+                }
 
                 Destroy(player); 
                 Time.timeScale = 0; 
