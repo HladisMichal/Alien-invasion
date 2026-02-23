@@ -159,9 +159,9 @@ public class PlayerScript : MonoBehaviour
                 {
                     deathUI.SetActive(true);
                 }
-
-                Destroy(player); 
                 Time.timeScale = 0; 
+                Destroy(player); 
+                
                 return;   
             }
             pohyboveSkore = player.transform.position.x - 341;

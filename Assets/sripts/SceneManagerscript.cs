@@ -10,6 +10,8 @@ public class SceneManagerscript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            if (Time.timeScale == 0f && !isPaused)
+                return;
             if (isPaused)
                 ResumeGame();
             else
@@ -56,6 +58,8 @@ public class SceneManagerscript : MonoBehaviour
     }
         public void PauseGame()
     {
+        if (Time.timeScale == 0f && !isPaused)
+            return;
         Time.timeScale = 0f;
         if (pauseMenuUI) pauseMenuUI.SetActive(true);
             isPaused = true;
