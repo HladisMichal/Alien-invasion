@@ -35,20 +35,20 @@ celkově to projít a zrychlit platformy a upravit enemy a vše
 #--!lepsi grafika!--#
 animace(kvalitnejsi)                    
 zvuky(jak zvukove efekty tak hudba) tím pádem i v nastavení hlasitost a možnost vypnout zvuk
+nastaveni ovladani
         //sberatelne srdicka(nejspis jen z bossu)
-sberatelne boosty po mape(nevim jake)
-online staty
-dash systém
+        //online staty
+        //dash systém
 když spadneš z mapy dát na chvíli nesmrtelnost po tom co tě to portne a udělat na to i grafický efekt
-více druhů enemy(npř. na blízko, na dá  lku normálně střílí, další co má granáty(jen možná), další co se teleportuje, další co padá z nebe, a pak třeba ufo co střílí z nebe)
-části kdyby se pozadí měnila(stage hry, takže možná i obtížnější)
+        //více druhů enemy(npř. na blízko, na dá  lku normálně střílí, další co má granáty(jen možná), další co se teleportuje, další co padá z nebe, a pak třeba ufo co střílí z nebe)
+        //části kdyby se pozadí měnila(stage hry, takže možná i obtížnější)
 vylepseni nahodneho generovani mapy(vice chunku ze kterych se generuje napr. nacasovana pohybujici se platforma a ty musis neco projit rychle aby jsi ji stihl a preskocil pres diru)
         nápady na mapy: menší podzemní část nad kterou bude tlačítko na odemčení pokračovaní a v podzemní části nějaká trapka ze stropu a celkově nějaké trapky a vylepšit prostředí ať to není suché a to samé dokola
         hlavně více map a některé ty bloky propojit mosty ať je to jakoby mapa né jen části ve vzduchu a vytvořit tile set
         
         //tlačítko na pauzu tam bude pokračovat nebo konec nebo restartovat
 Game difficulty nastavení (míň životů, pomalejší střelba a né tak často a nepřátelé zase rychlejší střelba a častěji)
-minibossové co by se objevovali po např. 5000 skóre
+/minibossové co by se objevovali po např. 5000 skóre
 
 /*
 podivat se na run n gun levely pro inspiraci
