@@ -22,7 +22,7 @@ public class MapGeneration : MonoBehaviour
     private List<GameObject> activeChunks = new List<GameObject>();
     private int lastChunkIndex = -1;
     private Coroutine ufoSpawnCoroutine;
-    private float nextMilestoneBoss = 400f; // Příští skóre pro boss chunk
+    private float nextMilestoneBoss = 500f; // Příští skóre pro boss chunk
     private double maxScoreSoFar = 0;
 
     // Static reference pro přístup z jiných skriptů (miniboss)
@@ -30,7 +30,7 @@ public class MapGeneration : MonoBehaviour
 
     public void ResetMilestonesForRestart()
     {
-        nextMilestoneBoss = 400f;
+        nextMilestoneBoss = 500f;
         maxScoreSoFar = 0;
         lastMinibossIndex = -1;
         lastChunkIndex = -1;
@@ -141,7 +141,7 @@ public class MapGeneration : MonoBehaviour
                         }
                         Debug.Log($"Spawned miniboss chunk: {newChunk.name} (index {newMinibossIndex}) at score {PlayerScript.skore} (max {maxScoreSoFar}).");
                         activeChunks.Add(newChunk);
-                        nextMilestoneBoss += 2000f; // Dalších 2000 skóre pro příští boss
+                        nextMilestoneBoss += 1000f; // Dalších 1000 skóre pro příští boss
                     }
                     else
                     {

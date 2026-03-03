@@ -22,24 +22,28 @@ celkove zrychlit platformy
 
 
                                                                 PIXELORAMA - open source graficky editor pro pixel art + animace
+
+
+
+
+
+
+
+
 # 4.
 bugfixing:
 střelba do zemi proletí od Playera i enemy a do enemy to proletí na půl taky
-MapPrefab7 porad ty platformy jsou pomale a daleko od sebe
-
-celkově to projít a zrychlit platformy a upravit enemy a vše
-
-
-
+        //celkově to projít a zrychlit platformy a upravit enemy a vše
         //menu
 #--!lepsi grafika!--#
 animace(kvalitnejsi)                    
 zvuky(jak zvukove efekty tak hudba) tím pádem i v nastavení hlasitost a možnost vypnout zvuk
 nastaveni ovladani
+grafika menu a UI
         //sberatelne srdicka(nejspis jen z bossu)
         //online staty
         //dash systém
-když spadneš z mapy dát na chvíli nesmrtelnost po tom co tě to portne a udělat na to i grafický efekt
+        //když spadneš z mapy dát na chvíli nesmrtelnost po tom co tě to portne a udělat na to i grafický efekt
         //více druhů enemy(npř. na blízko, na dá  lku normálně střílí, další co má granáty(jen možná), další co se teleportuje, další co padá z nebe, a pak třeba ufo co střílí z nebe)
         //části kdyby se pozadí měnila(stage hry, takže možná i obtížnější)
 vylepseni nahodneho generovani mapy(vice chunku ze kterych se generuje napr. nacasovana pohybujici se platforma a ty musis neco projit rychle aby jsi ji stihl a preskocil pres diru)

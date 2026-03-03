@@ -33,7 +33,7 @@ public class EnemyBulletscript : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             PlayerScript Playerscript = collision.gameObject.GetComponent<PlayerScript>();
-            Playerscript.OdeberZivoty(); // Odebere životy hráči
+            Playerscript.OdeberZivoty(); // Odebere životy hráči (a automaticky spustí invincibility)
             Debug.Log("životy: " + Playerscript.zivoty);
             Destroy(gameObject); // Zničí projektil
         }

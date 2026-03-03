@@ -82,6 +82,12 @@ public class PlayerScript : MonoBehaviour
     public float groundCheckWidth = 1f; // šířka boxu (přizpůsob šířce hráče)
     public float groundCheckHeight = 0.05f; // výška boxu (malá, těsně pod nohama)
 
+    // Invincibility system
+    public bool isInvincible = false;
+    private float invincibilityDuration = 0.5f; // doba trvání nesmrtelnosti v sekundách
+    private float invincibilityTimer = 0f;
+    private float invincibilityAlpha = 0.2f; // průhlednost během invincibility (0-1, nižší = více průhledný)
+
     void Start()
     {
         cameraLocked = false; // Reset camera lock při startu
@@ -144,6 +150,24 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
+        // Handle invincibility timer a visual effect
+        if (isInvincible)
+        {
+            invincibilityTimer -= Time.deltaTime;
+            if (invincibilityTimer <= 0)
+            {
+                isInvincible = false;
+                RestorePlayerVisibility();
+            }
+            else
+            {
+                // Blikající efekt - sprite se objevuje a zprůhledňuje
+                float blinkSpeed = 10f; // jak rychle bliká v Hz
+                float blinkFactor = Mathf.Abs(Mathf.Sin(Time.time * blinkSpeed * Mathf.PI));
+                SetPlayerAlpha(Mathf.Lerp(invincibilityAlpha, 1f, blinkFactor));
+            }
+        }
+
         if (player != null && kamera != null)
         {
             if (zivoty <= 0)
@@ -251,7 +275,7 @@ if (Input.GetButtonDown("Jump") && rb != null && GetIsGrounded() && Mathf.Abs(rb
             bool dashReady = Time.time - lastDashTime >= dashCooldown && !isDashing;
             UpdateDashUI(dashReady, Time.time - lastDashTime);
 
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0) || Input.GetKey(KeyCode.F))
 {
     if (Time.time - lastFireTime >= fireCooldown)
     {
@@ -384,15 +408,13 @@ void OnTriggerEnter2D(Collider2D other)
 
             // Pokus o teleport na Tilemapy ve scéně (univerzálně, bez seznamu GameObjectů)
             Tilemap[] tilemapsToUse = GetRelevantTilemaps();
-            if (tilemapsToUse != null && tilemapsToUse.Length > 0)
+            Vector3 safePos = FindNearestSafeTileAcrossTilemaps(player.transform.position, tilemapsToUse);
+            if (safePos != Vector3.zero)
             {
-                Vector3 safePos = FindNearestSafeTileAcrossTilemaps(player.transform.position, tilemapsToUse);
-                if (safePos != Vector3.zero)
-                {
-                    player.transform.position = safePos;
-                    Debug.Log("Hráč teleportován na bezpečný tile: " + safePos);
-                    return;
-                }
+                safePos.z = player.transform.position.z; // Zachování Z souřadnice
+                player.transform.position = safePos;
+                Debug.Log("Hráč teleportován na bezpečný tile: " + safePos);
+                return;
             }
 
             // Fallback na staré GameObjecty pokud Tilemap není přiřazená nebo nebyl nalezen tile
@@ -436,6 +458,7 @@ void OnTriggerEnter2D(Collider2D other)
                     surfaceHeight = nearestSurface.transform.localScale.y;
 
                 safePosition.y += surfaceHeight / 2f + 1f; // 1f je rezerva nad povrchem
+                safePosition.z = player.transform.position.z; // Zachování Z souřadnice
                 player.transform.position = safePosition;
 
                 Debug.Log("Hráč byl přesunut na bezpečné místo nad 'Ground' nebo 'Platform'.");
@@ -444,17 +467,16 @@ void OnTriggerEnter2D(Collider2D other)
             {
                 Debug.LogWarning("Nebyl nalezen žádný vhodný objekt s tagem 'Ground' nebo 'Platform'!");
             }
-
         }
+        
         if (other.CompareTag("Collectible"))
-    {
-        if (zivoty < hearts.Length)
         {
-            PridejZivoty();
-            Destroy(other.gameObject);
+            if (zivoty < hearts.Length)
+            {
+                PridejZivoty();
+                Destroy(other.gameObject);
+            }
         }
-    
-    }
     }
             public void UpdateHearts()
             {
@@ -466,10 +488,37 @@ void OnTriggerEnter2D(Collider2D other)
                         hearts[i].sprite = heartEmpty;
                 }
             }
+            public void StartInvincibility()
+            {
+                isInvincible = true;
+                invincibilityTimer = invincibilityDuration;
+                SetPlayerAlpha(invincibilityAlpha);
+            }
+
+            private void SetPlayerAlpha(float alpha)
+            {
+                if (playerSprite != null)
+                {
+                    Color newColor = playerSprite.color;
+                    newColor.a = alpha;
+                    playerSprite.color = newColor;
+                }
+            }
+
+            private void RestorePlayerVisibility()
+            {
+                SetPlayerAlpha(1f);
+            }
+
             public void OdeberZivoty()
             {
+                // Kontrola invincibility - pokud je háč nesmrtelný, žádné poskošení
+                if (isInvincible)
+                    return;
+
                 zivoty -= 1;
                 UpdateHearts();
+                StartInvincibility(); // Aktivuj invincibility frames po každém poskošení
             }
             public void PridejZivoty()
             {

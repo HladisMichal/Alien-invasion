@@ -3,7 +3,7 @@ using UnityEngine;
 public class backgroundScript : MonoBehaviour
 {
     public Transform player;
-    public float parallaxSpeed = 0.5f;
+    public float parallaxSpeed = 0.2f;
     public float offset = 2f; 
 
     private Transform[] backgrounds;

@@ -10,6 +10,7 @@ public class EnemyScript : MonoBehaviour
     
     public GameObject enemyProjectilePrefab; // Prefab střely nepřítele
     public float fireRate = 4f; // Interval mezi střelami (v sekundách)
+    public float minibossFireRate = 5f; // Interval mezi střelami minibosse (v sekundách)
     private Transform player; // Odkaz na hráče
     private bool isVisible = false; // Kontrola, zda je nepřítel viditelný
     private float nextFireTime = 0f; // Čas, kdy může nepřítel znovu střílet
@@ -80,7 +81,8 @@ public class EnemyScript : MonoBehaviour
         if (isVisible && Time.time >= nextFireTime)
         {
             Shoot();
-            nextFireTime = Time.time + fireRate; // Nastav čas další střelby
+            float currentFireRate = isMiniboss ? minibossFireRate : fireRate;
+            nextFireTime = Time.time + currentFireRate; // Nastav čas další střelby
         }
         
         // Teleportování minibosse
@@ -125,7 +127,7 @@ public class EnemyScript : MonoBehaviour
             PlayerScript playerScript = collision.gameObject.GetComponent<PlayerScript>();
             if (playerScript != null)
             {
-                playerScript.OdeberZivoty();
+                playerScript.OdeberZivoty(); // Odebere životy hráči (a automaticky spustí invincibility)
                 Debug.Log("Hráč dostal hit! Životy: " + playerScript.zivoty);
             }
         }

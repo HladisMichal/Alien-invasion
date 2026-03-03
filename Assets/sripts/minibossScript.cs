@@ -12,22 +12,7 @@ public class minibossScript : MonoBehaviour
 
     void Update()
     {
-        if (bossFightActive)
-        {
-            if (druh == 1)
-            {
-                
-                
-            }
-            else if (druh == 2)
-            {
-                
-            }
-            else if (druh == 3)
-            {
-            
-            }
-        }
+        
     }
 
     private void AktivujBariery()
