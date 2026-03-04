@@ -106,7 +106,7 @@ public class MapGeneration : MonoBehaviour
         // Pohyb neviditelné stěny (ponechávám)
         if (player != null && invisWall != null)
         {
-            float wallX = player.transform.position.x - 20f;
+            float wallX = player.transform.position.x - 30f;
             if (invisWall.transform.position.x < wallX)
                 invisWall.transform.position = new Vector3(wallX, invisWall.transform.position.y, invisWall.transform.position.z);
         }

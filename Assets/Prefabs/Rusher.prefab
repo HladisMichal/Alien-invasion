@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4072691075532368220}
   - component: {fileID: 5266125593445638139}
   - component: {fileID: 7721835838571635896}
+  - component: {fileID: 1929441659681087450}
   m_Layer: 8
   m_Name: Rusher
   m_TagString: Enemy
@@ -30,8 +31,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 351.21, y: 185.94, z: 0}
-  m_LocalScale: {x: 0.3756511, y: 0.3756511, z: 0.3756511}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -79,12 +80,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1278684669381096843, guid: 9acbff8f0d974474e855d069b728feb0, type: 3}
+  m_Sprite: {fileID: 6670608033193114106, guid: f85a0fa447f258f4f8c71e9e6deb4f70, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.06, y: 4.58}
+  m_Size: {x: 1.11, y: 1.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -124,17 +125,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.4393456, y: 0.04067397}
+  m_Offset: {x: -0.14453506, y: 0.004262924}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.06, y: 4.58}
-    newSize: {x: 3.06, y: 4.58}
+    oldSize: {x: 1.11, y: 1.64}
+    newSize: {x: 1.11, y: 1.64}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.1813087, y: 4.498652}
+  m_Size: {x: 0.8223343, y: 1.6395569}
   m_EdgeRadius: 0
 --- !u!50 &5266125593445638139
 Rigidbody2D:
@@ -148,7 +149,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 1.3847419
+  m_Mass: 2.6425972
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 3
@@ -176,6 +177,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  jumpForce: 15
+  jumpForce: 25
   damageCooldown: 1
-  jumpCooldown: 0.9
+  jumpCooldown: 0.7
+--- !u!95 &1929441659681087450
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4126270867854961622}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 21e4221b7e8fa3644bc9c2ae01330d72, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

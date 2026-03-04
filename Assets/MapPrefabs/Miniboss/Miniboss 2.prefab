@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 8055825316079012131}
   - component: {fileID: 5030984758067556380}
   - component: {fileID: 6959574416875866415}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: UndergrounderPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,6 +115,7 @@ MonoBehaviour:
   warningDuration: 0.5
   mainUndergrounderParent: {fileID: 8393344077261119402}
   undergrounderSprite: {fileID: 5647896094712783425}
+  skoreBonusANI: {fileID: 6780066844563989097, guid: 4290cb5c0d5a8ca4e96ae9aa47f97a15, type: 3}
 --- !u!1 &745161982918633668
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,7 +330,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8499041722310159600}
   - component: {fileID: 2098355924066402810}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: hole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1762,7 +1763,7 @@ GameObject:
   - component: {fileID: 8393344077261119402}
   - component: {fileID: 2407698281159492984}
   - component: {fileID: 3111244935836544072}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MinibossUndergrounder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1816,6 +1817,7 @@ MonoBehaviour:
   warningDuration: 1
   mainUndergrounderParent: {fileID: 0}
   undergrounderSprite: {fileID: 5647896094712783425}
+  skoreBonusANI: {fileID: 6780066844563989097, guid: 4290cb5c0d5a8ca4e96ae9aa47f97a15, type: 3}
 --- !u!61 &3111244935836544072
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2282,7 +2284,7 @@ GameObject:
   - component: {fileID: 987039200401553649}
   - component: {fileID: 1582142563916457497}
   - component: {fileID: 1889569520813079729}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: UndergrounderSprite
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -2455,6 +2457,7 @@ MonoBehaviour:
   warningDuration: 0.25
   mainUndergrounderParent: {fileID: 0}
   undergrounderSprite: {fileID: 0}
+  skoreBonusANI: {fileID: 6780066844563989097, guid: 4290cb5c0d5a8ca4e96ae9aa47f97a15, type: 3}
 --- !u!1 &4839450843741582386
 GameObject:
   m_ObjectHideFlags: 0

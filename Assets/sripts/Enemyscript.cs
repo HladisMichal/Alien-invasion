@@ -30,6 +30,7 @@ public class EnemyScript : MonoBehaviour
     private float nextTeleportTime = 0f;
     private int lastTeleportIndex = -1; // Poslední použitá pozice
     private float scale;
+    public GameObject skoreBonusANI; // Animace bonusu skóre při poražení minibossa
 
     void Start()
     {
@@ -176,7 +177,8 @@ public class EnemyScript : MonoBehaviour
             if (mbScript != null)
             {
                 mbScript.DeaktivujBariery();
-            }
+                Instantiate(skoreBonusANI, new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), Quaternion.identity);
+                PlayerScript.akceSkore += 200;            }
             
             // Spawn bonusové srdíčko na místě minibosse
             if (bonusHeartPrefab != null)

@@ -35,6 +35,7 @@ public class UndergrounderScript : MonoBehaviour
     private Animator animator;
     private Animator spriteAnimator; // Animator na undergroundersprite
     private Vector3 offsetFromParentToHole; // Rozdíl mezi parentem a hole
+    public GameObject skoreBonusANI; // Animace bonusu skóre při poražení minibossa
 
     void Start()
     {
@@ -219,6 +220,8 @@ public class UndergrounderScript : MonoBehaviour
         if (isMiniboss && bossHealthBar != null)
         {
             bossHealthBar.gameObject.SetActive(false);
+            Instantiate(skoreBonusANI, new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), Quaternion.identity);
+            PlayerScript.akceSkore += 200;
         }
         
         // Deaktivuj část

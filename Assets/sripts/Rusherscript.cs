@@ -61,30 +61,39 @@ public class Rusherscript : MonoBehaviour
         
         Collider2D col = GetComponent<Collider2D>();
         if (col == null) return;
-        
-        Vector2 checkPos = (Vector2)col.bounds.center + Vector2.right * direction * 0.6f;
-        
-        RaycastHit2D hitObstacle = Physics2D.Raycast(checkPos, Vector2.right * direction, 1f);
-        RaycastHit2D hitGround = Physics2D.Raycast(checkPos, Vector2.down, 1.2f);
-        RaycastHit2D hitGap = Physics2D.Raycast(checkPos + Vector2.right * direction * 1f + Vector2.up * 1.5f, Vector2.down, 3f);
-        
-        Debug.DrawLine(checkPos, checkPos + Vector2.right * direction * 1f, Color.red);
-        Debug.DrawLine(checkPos, checkPos + Vector2.down * 1.2f, Color.green);
-        Debug.DrawLine(checkPos + Vector2.right * direction * 1f + Vector2.up * 1.5f, checkPos + Vector2.right * direction * 1f + Vector2.up * 1.5f + Vector2.down * 3f, Color.yellow);
-        
+
+        int rayMask = Physics2D.DefaultRaycastLayers & ~(1 << gameObject.layer);
+
+        Vector2 checkPos = new Vector2(col.bounds.center.x, col.bounds.center.y);
+        Vector2 obstacleCheckPos = new Vector2(col.bounds.center.x, col.bounds.min.y + 0.15f);
+        Vector2 gapCheckPos = new Vector2(col.bounds.center.x + direction * (col.bounds.extents.x + 0.5f), col.bounds.min.y + 0.9f);
+
+        float obstacleRayDistance = 1.3f;
+        float groundRayDistance = col.bounds.extents.y + 0.35f;
+        float gapRayDistance = col.bounds.extents.y + 1.25f;
+
+        RaycastHit2D hitObstacle = Physics2D.Raycast(obstacleCheckPos, Vector2.right * direction, obstacleRayDistance, rayMask);
+        RaycastHit2D hitGround = Physics2D.Raycast(checkPos, Vector2.down, groundRayDistance, rayMask);
+        RaycastHit2D hitGap = Physics2D.Raycast(gapCheckPos, Vector2.down, gapRayDistance, rayMask);
+
+        Debug.DrawLine(obstacleCheckPos, obstacleCheckPos + Vector2.right * direction * obstacleRayDistance, Color.red);
+        Debug.DrawLine(checkPos, checkPos + Vector2.down * groundRayDistance, Color.green);
+        Debug.DrawLine(gapCheckPos, gapCheckPos + Vector2.down * gapRayDistance, Color.yellow);
+
         if (canJump)
         {
-            if (hitGround.collider != null && (hitGround.collider.CompareTag("Ground") || hitGround.collider.CompareTag("Platform")))
+            bool onGround = hitGround.collider != null && (hitGround.collider.CompareTag("Ground") || hitGround.collider.CompareTag("Platform"));
+            bool obstacleAhead = hitObstacle.collider != null && (hitObstacle.collider.CompareTag("Ground") || hitObstacle.collider.CompareTag("Platform"));
+            bool groundAfterGap = hitGap.collider != null && (hitGap.collider.CompareTag("Ground") || hitGap.collider.CompareTag("Platform"));
+
+            if (onGround && obstacleAhead)
             {
-                if (hitObstacle.collider != null && (hitObstacle.collider.CompareTag("Ground") || hitObstacle.collider.CompareTag("Platform")))
-                {
-                    rb.velocity = new Vector2(rb.velocity.x, 0);
-                    rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-                    lastJumpTime = Time.time;
-                    Debug.Log("JUMP! - Překážka");
-                }
+                rb.velocity = new Vector2(rb.velocity.x, 0);
+                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                lastJumpTime = Time.time;
+                Debug.Log("JUMP! - Překážka");
             }
-            else if (hitGap.collider != null && (hitGap.collider.CompareTag("Ground") || hitGap.collider.CompareTag("Platform")))
+            else if (!onGround && groundAfterGap)
             {
                 rb.velocity = new Vector2(rb.velocity.x, 0);
                 rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);

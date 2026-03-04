@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 3718251533780745228}
   - component: {fileID: 1336153780834937127}
   - component: {fileID: 3712043213715252418}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ground
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1029,12 +1029,14 @@ MonoBehaviour:
   minibossHealth: 10
   enemyProjectilePrefab: {fileID: 2332787221070375762, guid: 4e5e831684e8ef44ab68da323aac02d9, type: 3}
   fireRate: 4
+  minibossFireRate: 5
   ufo_prefab: {fileID: 0}
   bossHealthBar: {fileID: 0}
   bonusHeartPrefab: {fileID: 0}
   teleportPositions: []
   teleportCooldown: 5
   minDistanceFromPlayer: 0.2
+  skoreBonusANI: {fileID: 0}
 --- !u!1 &1589976235012474795
 GameObject:
   m_ObjectHideFlags: 0
@@ -1707,12 +1709,14 @@ MonoBehaviour:
   minibossHealth: 10
   enemyProjectilePrefab: {fileID: 2332787221070375762, guid: 4e5e831684e8ef44ab68da323aac02d9, type: 3}
   fireRate: 4
+  minibossFireRate: 5
   ufo_prefab: {fileID: 0}
   bossHealthBar: {fileID: 0}
   bonusHeartPrefab: {fileID: 0}
   teleportPositions: []
   teleportCooldown: 5
   minDistanceFromPlayer: 0.2
+  skoreBonusANI: {fileID: 0}
 --- !u!1 &7204367688938219746
 GameObject:
   m_ObjectHideFlags: 0
@@ -1924,12 +1928,14 @@ MonoBehaviour:
   minibossHealth: 10
   enemyProjectilePrefab: {fileID: 2332787221070375762, guid: 4e5e831684e8ef44ab68da323aac02d9, type: 3}
   fireRate: 4
+  minibossFireRate: 5
   ufo_prefab: {fileID: 0}
   bossHealthBar: {fileID: 0}
   bonusHeartPrefab: {fileID: 0}
   teleportPositions: []
   teleportCooldown: 5
   minDistanceFromPlayer: 0.2
+  skoreBonusANI: {fileID: 0}
 --- !u!1 &9100899826681090625
 GameObject:
   m_ObjectHideFlags: 0

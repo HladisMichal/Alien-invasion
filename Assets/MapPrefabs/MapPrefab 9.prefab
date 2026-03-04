@@ -1141,12 +1141,14 @@ MonoBehaviour:
   minibossHealth: 10
   enemyProjectilePrefab: {fileID: 2332787221070375762, guid: 4e5e831684e8ef44ab68da323aac02d9, type: 3}
   fireRate: 4
+  minibossFireRate: 5
   ufo_prefab: {fileID: 0}
   bossHealthBar: {fileID: 0}
   bonusHeartPrefab: {fileID: 0}
   teleportPositions: []
   teleportCooldown: 5
   minDistanceFromPlayer: 0.2
+  skoreBonusANI: {fileID: 0}
 --- !u!1 &6376302689760109996
 GameObject:
   m_ObjectHideFlags: 0
@@ -2700,7 +2702,7 @@ GameObject:
   - component: {fileID: 4737966983170851925}
   - component: {fileID: 6422716821899577682}
   - component: {fileID: 7123164192381923125}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ground
   m_TagString: Ground
   m_Icon: {fileID: 0}
