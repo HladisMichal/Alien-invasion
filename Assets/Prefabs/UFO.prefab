@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 3388793886690781288}
   - component: {fileID: 1914821087448847118}
   - component: {fileID: 8829247487662161972}
-  m_Layer: 0
+  - component: {fileID: 163387213151841064}
+  m_Layer: 10
   m_Name: UFO_Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,6 +111,52 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!61 &163387213151841064
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161370291789515921}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 7.1598053, y: 3.28}
+    newSize: {x: 7.1598053, y: 3.28}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 7.1598053, y: 3.28}
+  m_EdgeRadius: 0
 --- !u!1 &2556346726076418043
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,7 +167,7 @@ GameObject:
   m_Component:
   - component: {fileID: 851243507350221058}
   - component: {fileID: 6602904969575421219}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: UFO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,6 +206,8 @@ MonoBehaviour:
   laserBodyPrefab: {fileID: 8823679033252868969, guid: ee996dfaf3fa31e4e90f8be3321797e9, type: 3}
   laserEndPrefab: {fileID: 5475151717424864890, guid: 00cef29fce4965e4494cc88469507157, type: 3}
   continuousFire: 0
+  animator: {fileID: 0}
+  stopFireHitbox: {fileID: 0}
 --- !u!1 &9171714655185032964
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,7 +219,7 @@ GameObject:
   - component: {fileID: 3641521202096919908}
   - component: {fileID: 5342737980255221886}
   - component: {fileID: 8788781917166371564}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: UFO_Position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -231,3 +280,5 @@ MonoBehaviour:
   laserBodyPrefab: {fileID: 8823679033252868969, guid: ee996dfaf3fa31e4e90f8be3321797e9, type: 3}
   laserEndPrefab: {fileID: 5475151717424864890, guid: 00cef29fce4965e4494cc88469507157, type: 3}
   continuousFire: 0
+  animator: {fileID: 0}
+  stopFireHitbox: {fileID: 163387213151841064}

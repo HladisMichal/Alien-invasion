@@ -1,6 +1,7 @@
 // UFOFollowPlayer.cs
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class UFOFollowPlayer : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class UFOFollowPlayer : MonoBehaviour
     public bool continuousFire = false;
 
     public Animator animator;
+    public Collider2D stopFireHitbox;
 
     private GameObject currentLaserBody;
     private GameObject currentLaserEnd;
@@ -21,8 +23,11 @@ public class UFOFollowPlayer : MonoBehaviour
     private bool barrierActive = false;
     private Coroutine fireCoroutine; // Pro zastavení coroutine
 
+
     void Update()
     {
+        CheckStopFireHitbox();
+
         // Pokud je zapnuta kontinuální palba, strilej kazdy frame
         if (continuousFire)
         {
@@ -83,7 +88,9 @@ public class UFOFollowPlayer : MonoBehaviour
             }
         }
 
-        if (validHit.HasValue)
+        bool hasValidHit = validHit.HasValue;
+
+        if (hasValidHit)
         {
             var hit = validHit.Value;
             float distance = hit.distance;
@@ -122,7 +129,42 @@ public class UFOFollowPlayer : MonoBehaviour
         }
 
         if (currentLaserBody != null) currentLaserBody.SetActive(true);
-        if (currentLaserEnd != null) currentLaserEnd.SetActive(true);
+        if (currentLaserEnd != null) currentLaserEnd.SetActive(hasValidHit);
+    }
+
+    private void CheckStopFireHitbox()
+    {
+        if (stopFireHitbox == null)
+            return;
+
+        if (!continuousFire && !isFiring)
+            return;
+
+        List<Collider2D> hitResults = new List<Collider2D>();
+        ContactFilter2D filter = new ContactFilter2D();
+        Physics2D.OverlapCollider(stopFireHitbox, filter, hitResults);
+        foreach (Collider2D hit in hitResults)
+        {
+            if (hit != null && hit.GetComponent<Bulletscript>() != null)
+            {
+                StopFiringNow();
+                return;
+            }
+        }
+    }
+
+    private void StopFiringNow()
+    {
+        continuousFire = false;
+
+        if (fireCoroutine != null)
+        {
+            StopCoroutine(fireCoroutine);
+            fireCoroutine = null;
+        }
+
+        isFiring = false;
+        HideLaser();
     }
 
     public void SetContinuousFire(bool enabled)

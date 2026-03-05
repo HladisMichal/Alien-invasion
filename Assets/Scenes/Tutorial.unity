@@ -690,12 +690,14 @@ MonoBehaviour:
   minibossHealth: 10
   enemyProjectilePrefab: {fileID: 2332787221070375762, guid: 4e5e831684e8ef44ab68da323aac02d9, type: 3}
   fireRate: 4
+  minibossFireRate: 5
   ufo_prefab: {fileID: 0}
   bossHealthBar: {fileID: 0}
   bonusHeartPrefab: {fileID: 0}
   teleportPositions: []
   teleportCooldown: 5
   minDistanceFromPlayer: 0.2
+  skoreBonusANI: {fileID: 0}
 --- !u!212 &171807678
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5291,6 +5293,46 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: 428, y: 183, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 16
+      m_TileSpriteIndex: 16
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: 429, y: 183, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 16
+      m_TileSpriteIndex: 16
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: 430, y: 183, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 16
+      m_TileSpriteIndex: 16
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: 431, y: 183, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 16
+      m_TileSpriteIndex: 16
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: 325, y: 184, z: 0}
     second:
       serializedVersion: 2
@@ -7495,7 +7537,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: babaedbac6f8df14b91e04392096c0cd, type: 2}
   - m_RefCount: 11
     m_Data: {fileID: 11400000, guid: b9f09ac718960814090a28df5bb90d36, type: 2}
-  - m_RefCount: 123
+  - m_RefCount: 127
     m_Data: {fileID: 11400000, guid: 6426f62176bd7664d85ac1ca4b5314b6, type: 2}
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: 2469f38e270de6e4580d37943f5098c8, type: 2}
@@ -7548,7 +7590,7 @@ Tilemap:
     m_Data: {fileID: -1826308444707793551, guid: 1c359e4014e11cf49a6abd0bfbd81801, type: 3}
   - m_RefCount: 11
     m_Data: {fileID: -976202985, guid: 5b60bc3606ea49c4a85c5733af8b4f9c, type: 3}
-  - m_RefCount: 123
+  - m_RefCount: 127
     m_Data: {fileID: 1971855298, guid: 5b60bc3606ea49c4a85c5733af8b4f9c, type: 3}
   - m_RefCount: 9
     m_Data: {fileID: 5663061954668274717, guid: 5b60bc3606ea49c4a85c5733af8b4f9c, type: 3}
@@ -7569,7 +7611,7 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 971367504742289926, guid: 9b0d39deeb66a884b8bd8ff485d96b11, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 292
+  - m_RefCount: 296
     m_Data:
       e00: 1
       e01: 0
@@ -7642,7 +7684,7 @@ Tilemap:
       e32: 4.18e-43
       e33: 4.15e-43
   m_TileColorArray:
-  - m_RefCount: 292
+  - m_RefCount: 296
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -8056,12 +8098,14 @@ MonoBehaviour:
   minibossHealth: 10
   enemyProjectilePrefab: {fileID: 2332787221070375762, guid: 4e5e831684e8ef44ab68da323aac02d9, type: 3}
   fireRate: 4
+  minibossFireRate: 5
   ufo_prefab: {fileID: 0}
   bossHealthBar: {fileID: 0}
   bonusHeartPrefab: {fileID: 0}
   teleportPositions: []
   teleportCooldown: 5
   minDistanceFromPlayer: 0.2
+  skoreBonusANI: {fileID: 0}
 --- !u!212 &920814946
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9302,6 +9346,7 @@ MonoBehaviour:
   - Platform
   groundCheckWidth: 0.9
   groundCheckHeight: 0.05
+  isInvincible: 0
 --- !u!4 &1210771625
 Transform:
   m_ObjectHideFlags: 0
@@ -9589,7 +9634,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7687227794334363302, guid: 79fa039f5751f554d959548bcba1079f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 185.8
+      value: 186.18
       objectReference: {fileID: 0}
     - target: {fileID: 7687227794334363302, guid: 79fa039f5751f554d959548bcba1079f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9625,7 +9670,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7721835838571635896, guid: 79fa039f5751f554d959548bcba1079f, type: 3}
       propertyPath: jumpForce
-      value: 15
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7721835838571635896, guid: 79fa039f5751f554d959548bcba1079f, type: 3}
       propertyPath: jumpCooldown

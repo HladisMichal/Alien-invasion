@@ -541,28 +541,27 @@ void OnTriggerEnter2D(Collider2D other)
 
             void StartDash()
             {
-                if (player == null || rb == null) return;
-
+                if (animator != null)
+                {
+                    animator.SetTrigger("Dash");
+                }
+                
                 float direction = playerSprite != null && playerSprite.flipX ? -1f : 1f;
                 rb.velocity = new Vector2(direction * dashSpeed, rb.velocity.y);
-
                 isDashing = true;
                 lastDashTime = Time.time;
-
-                Debug.Log("Dash! Směr: " + (direction > 0 ? "doprava" : "doleva"));
             }
 
-            void UpdateDash()
+        void UpdateDash()
+        {
+            if (!isDashing || player == null || rb == null) return;
+            
+            if (Time.time - lastDashTime >= 0.3f)
             {
-                if (!isDashing || player == null || rb == null) return;
-
-                if (Time.time - lastDashTime >= 0.3f)
-                {
-                    isDashing = false;
-                    rb.velocity = new Vector2(0, rb.velocity.y);
-                    Debug.Log("Dash skončil!");
-                }
+                isDashing = false;
+                rb.velocity = new Vector2(0, rb.velocity.y);
             }
+        }
 
             void UpdateDashUI(bool isReady, float elapsedSinceLastDash)
             {

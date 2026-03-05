@@ -6759,6 +6759,7 @@ MonoBehaviour:
   firePointDownLeft: {x: -1.6, y: -0.5}
   dashDistance: 3
   dashSpeed: 6
+  dashSprite: {fileID: 21300000, guid: deeabad54d021f74b985705d2a0ede4d, type: 3}
   dashIcon: {fileID: 1655250924}
   dashReadySprite: {fileID: 21300000, guid: fe5b987f67bf90840a3c8f6769e00af7, type: 3}
   dashCooldownSprite: {fileID: 21300000, guid: c2b82319f8f0472458713a1d5ab26db0, type: 3}

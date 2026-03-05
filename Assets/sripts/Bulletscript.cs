@@ -6,6 +6,7 @@ public class Bulletscript : MonoBehaviour
     public Vector2 direction = Vector2.right;
     public float strelaSpeed = 50f; // Rychlost střely
     private Rigidbody2D rb; // Odkaz na Rigidbody2D střely
+    private Collider2D bulletCollider;
 
 
     // Nastav v Inspectoru nebo najdi v Start()
@@ -21,6 +22,10 @@ public class Bulletscript : MonoBehaviour
 
         // Získání Rigidbody2D a nastavení rychlosti
         rb = GetComponent<Rigidbody2D>();
+        bulletCollider = GetComponent<Collider2D>();
+
+        IgnorePlatformCollisions();
+
         if (rb != null)
         {
             rb.linearVelocity = direction * strelaSpeed; // Střela letí rovně ve směru, kam je otočená
@@ -35,6 +40,11 @@ public class Bulletscript : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("Platform"))
+        {
+            return;
+        }
+
         // Kontrola, zda se střela dotkla objektu s tagem "Ground"
         if (collision.gameObject.CompareTag("Ground"))
         {
@@ -48,7 +58,48 @@ public class Bulletscript : MonoBehaviour
             Destroy(gameObject); // Zničení střely
             Debug.Log("Nepřítel byl zničen!"); // Debug message pro zničení nepřítele
         }
+        if (collision.gameObject.CompareTag("miniboss"))
+        {
+            Destroy(gameObject); // Zničení střely
+        }
     }
+
+    void IgnorePlatformCollisions()
+{
+    if (bulletCollider == null)
+    {
+        return;
+    }
+
+    try
+    {
+        // Ignoruj Platform
+        GameObject[] platforms = GameObject.FindGameObjectsWithTag("Platform");
+        foreach (GameObject platform in platforms)
+        {
+            Collider2D[] platformColliders = platform.GetComponentsInChildren<Collider2D>();
+            foreach (Collider2D platformCollider in platformColliders)
+            {
+                Physics2D.IgnoreCollision(bulletCollider, platformCollider, true);
+            }
+        }
+        
+        // Ignoruj UFO layer
+        int ufoLayer = LayerMask.NameToLayer("Ufo");
+        Collider2D[] ufoColliders = FindObjectsOfType<Collider2D>();
+        foreach (Collider2D ufoCollider in ufoColliders)
+        {
+            if (ufoCollider.gameObject.layer == ufoLayer)
+            {
+                Physics2D.IgnoreCollision(bulletCollider, ufoCollider, true);
+            }
+        }
+    }
+    catch (UnityException)
+    {
+        // Tag Platform nemusí být definovaný ve všech scénách
+    }
+}
 
     void ShowSkoreBonus(Vector3 enemyPosition)
     {
