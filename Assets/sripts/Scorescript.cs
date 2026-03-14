@@ -10,6 +10,8 @@ public class LeaderboardDisplay : MonoBehaviour
     [Header("UI Elements")]
     public TextMeshProUGUI[] nameTexts;  // Přiřaď 10 textů pro jména
     public TextMeshProUGUI[] scoreTexts; // Přiřaď 10 textů pro skóre
+    public GameObject noInternetGroup;   // Zobrazí se, když se leaderboard nepodaří načíst
+    public GameObject placeGroup;        // Napr. objekt s nadpisem/sloupcem Place
 
     private string myPlayerID = "";
 
@@ -20,12 +22,14 @@ public class LeaderboardDisplay : MonoBehaviour
         {
             if (response.success)
             {
+                ShowNoInternet(false);
                 myPlayerID = response.player_id.ToString();
                 RefreshLeaderboard();
             }
             else
             {
                 Debug.LogError("LootLocker: Selhalo přihlášení");
+                ShowNoInternet(true);
             }
         });
     }
@@ -40,6 +44,8 @@ public class LeaderboardDisplay : MonoBehaviour
         {
             if (response.success && response.items != null)
             {
+                ShowNoInternet(false);
+
                 // Nejdřív všechna textová pole vyčistíme (příprava na posun)
                 for (int i = 0; i < nameTexts.Length; i++)
                 {
@@ -73,7 +79,25 @@ public class LeaderboardDisplay : MonoBehaviour
                 }
                 Debug.Log("[Leaderboard] Tabulka aktualizována a posunuta.");
             }
+            else
+            {
+                Debug.LogError("[Leaderboard] Nepodařilo se načíst statistiky (pravděpodobně není připojení k internetu).");
+                ShowNoInternet(true);
+            }
         });
+    }
+
+    private void ShowNoInternet(bool show)
+    {
+        if (noInternetGroup != null)
+        {
+            noInternetGroup.SetActive(show);
+        }
+
+        if (placeGroup != null)
+        {
+            placeGroup.SetActive(!show);
+        }
     }
 
     // Metoda pro tlačítko "Smazat"

@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 368678395}
   - component: {fileID: 368678394}
   m_Layer: 0
-  m_Name: "Datov\xFD zdroj 14"
+  m_Name: TitleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
