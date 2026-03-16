@@ -150,6 +150,7 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0) return;
         // Handle invincibility timer a visual effect
         if (isInvincible)
         {

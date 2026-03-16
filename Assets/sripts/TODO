@@ -32,7 +32,22 @@ celkove zrychlit platformy
 
 # 4.
 bugfixing:
-střelba do zemi proletí od Playera i enemy a do enemy to proletí na půl taky
+Hráč může proskočit zemí dolů a dostane tak hit + se může zaseknout z boku
+dodělat tutoriál + upravit v něm UI
+UI nastaveníní
+nastavení ovládání
+
+
+
+
+
+
+
+
+
+
+
+        //střelba do zemi proletí od Playera i enemy a do enemy to proletí na půl taky
         //celkově to projít a zrychlit platformy a upravit enemy a vše
         //menu
 #--!lepsi grafika!--#
@@ -66,79 +81,3 @@ pokud bude specalni abilita tak perry system at se rychleji nabyje
 vice postav => vice specialnich abilitek => v menu výběr postavy
 možnsot najít nové zbraně na mapě třeba dropnou z enemy náhodně a nebo na nějaké délce třeba když bude mít skóre 1000 tak najde zbraň která by se odemkla
 možnost dropy z enemy
-
-
-
-
-
-
-Příprava grafických podkladů
-        Vytvořit postavu hráče (animace běhu, skoku, smrti).
-        Vytvořit grafiku pro 8 směrů střelby a efekt dashe.
-        Nakreslit nepřítele: Ranger (střelec).
-        Nakreslit nepřítele: Rusher (bojovník na blízko).
-        Nakreslit nepřítele: UFO (létající s laserem).
-        Nakreslit nepřítele: Undergrounder (skrytý v zemi).
-        Navrhnout vizuál Minibosse.
-        Vytvořit sady dlaždic (tileset) pro zemi a různé druhy platforem.
-        Připravit UI prvky (tlačítka, fonty, ikony životů).
-        
-Implementace herního světa
-        Vytvořit systém „Modular Map Spawning“ (náhodné spojování částí).
-        Zajistit podmínku, aby se dvě stejné části neobjevily hned za sebou.
-        Naprogramovat bariéru, která se pohybuje za hráčem a blokuje návrat vlevo.
-        Implementovat „Object Pooling“ nebo mazání starých částí mapy za bariérou.
-        Nastavit fyziku platforem (proskakování nahoru a propadání dolů pomocí Ctrl).
-        Naprogramovat logiku pohybujících se platforem (nastavení rychlosti a délky trasy).
-        Naprogramovat logiku rozbíjejících se platforem s obnovou.
-        Naprogramovat logiku platformy, která se rozjede až po dotyku.
-
-Programování hráče a ovládání
-        Pohyb vlevo/vpravo (A, D / šipky).
-        Skok (mezerník).
-        Systém 8-směrného míření (WASD kombinace).
-        Střelba projektilů (LMB) směrem, kam hráč míří.
-        Mechanika Dash (Shift) ve směru otočení.
-        Systém životů (Health System) a nesmrtelnost po zásahu (iframes).
-
-Nepřátelé a AI
-        AI pro Rangera: detekce hráče a střelba z místa.
-        AI pro Rushera: pohyb směrem k hráči při detekci.
-        AI pro UFO: náhodné spawnování, sledování pozice nad hráčem a laserový útok.
-        AI pro Undergroundera: detekce nášlapu a výpad ze země.
-        AI pro Minibosse: vysoký počet životů, sekvence speciálních útoků a drop srdíčka.
-Uživatelské rozhraní (UI) a systémy
-
-Hlavní menu (Start, Tutoriál, Nastavení, Statistiky, Konec).
-
-Scéna Tutoriálu: interaktivní vysvětlení mechanik.
-
-Herní HUD: dynamický ukazatel životů a aktuálního skóre.
-
-Systém pauzy (Esc) s možností návratu do menu.
-
-Výpočet skóre: kombinace uražené vzdálenosti a bodů za zabití.
-
-Systém milníků: vyvolání Minibosse při určitém skóre.
-
-Ukládání nejvyššího skóre (PlayerPrefs nebo JSON).
-
-Menu nastavení: ovládání hlasitosti a přenastavení kláves.
-
-Finalizace a testování
-
-Otestování vyváženosti obtížnosti.
-
-Oprava chyb v kolizích a generování mapy.
-
-Export hry do samostatného spustitelného souboru (.exe).
-
-Volitelná rozšíření (pokud zbude čas)
-
-Výběr obtížnosti před startem (vliv na HP a rychlost nepřátel).
-
-Menu pro změnu skinu postavy.
-
-Propojení s Unity Cloud pro globální žebříčky.
-
-Systém různých zbraní (např. brokovnice s rozptylem).

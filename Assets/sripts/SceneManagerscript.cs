@@ -19,11 +19,21 @@ public class SceneManagerscript : MonoBehaviour
         }
     }
     // Přepne na scénu s názvem "Game"
-    public void LoadGame()
+   public void LoadGame()
+{
+    // 1. Najdeme starou hudbu
+    GameObject menuMusic = GameObject.Find("MusicManagerMenu");
+    if (menuMusic != null) 
     {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("Game");
+        // 2. Vynulujeme statickou referenci, aby si nový manager nemyslel, že je plno
+        MusicManager.Instance = null; 
+        // 3. Smažeme starý objekt
+        Destroy(menuMusic);
     }
+
+    Time.timeScale = 1f;
+    SceneManager.LoadScene("Game");
+}
 
     // Přepne na scénu s názvem "Settings"
     public void LoadSettings()
@@ -33,21 +43,36 @@ public class SceneManagerscript : MonoBehaviour
 
     // Přepne zpět do menu (scéna "Menu")
     public void LoadMenu()
+{
+    GameObject gameMusic = GameObject.Find("MusicManagerGame");
+    if (gameMusic != null) 
     {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("Menu");
-    }
-    public void LoadTutorial()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("Tutorial");
+        MusicManager.Instance = null; // Důležité: uvolnit referenci!
+        Destroy(gameMusic);
     }
 
-    public void LoadStatistic()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("Statistic");
-    }
+    Time.timeScale = 1f;
+    SceneManager.LoadScene("Menu");
+}
+    public void LoadTutorial()
+{
+    // Tutorial bere herní hudbu, takže smažeme menu hudbu
+    GameObject menuMusic = GameObject.Find("MusicManagerMenu");
+    if (menuMusic != null) Destroy(menuMusic);
+
+    Time.timeScale = 1f;
+    SceneManager.LoadScene("Tutorial");
+}
+
+   public void LoadStatistic()
+{
+    // Pokud jdeme do statistik ze hry, smažeme herní hudbu
+    GameObject gameMusic = GameObject.Find("MusicManagerGame");
+    if (gameMusic != null) Destroy(gameMusic);
+
+    Time.timeScale = 1f;
+    SceneManager.LoadScene("Statistic");
+}
     public void QuitGame()
     {
         #if UNITY_EDITOR
