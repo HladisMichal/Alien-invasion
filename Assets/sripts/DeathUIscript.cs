@@ -38,7 +38,6 @@ public class DeathUIManager : MonoBehaviour
 
         if (currentScore <= localBest)
         {
-            Debug.Log("[Leaderboard] Skóre se neukládá, protože už máš lepší výsledek.");
             ShowOnlyGroup(lowerScoreGroup);
             return;
         }
@@ -59,7 +58,6 @@ public class DeathUIManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("[Leaderboard] Selhalo připojení ke statistikám (pravděpodobně chybí internet)." );
                 ShowOnlyGroup(connectionErrorGroup);
             }
         });
@@ -98,39 +96,21 @@ public class DeathUIManager : MonoBehaviour
     private void ProcessSave(string playerName)
     {
         inputGroup.SetActive(false);
-        
         int currentScore = PlayerPrefs.GetInt("LastScore", 0);
-        // Načte rekord uložený v mobilu/PC
         int localBest = PlayerPrefs.GetInt("LocalHighScore", 0);
-
-        Debug.Log($"[Leaderboard] Aktuální skóre: {currentScore}, Místní rekord: {localBest}");
-
-        // KONTROLA: Na server jdeme jen tehdy, když jsme se zlepšili oproti rekordu v mobilu
         if (currentScore > localBest)
         {
-            Debug.Log("[Leaderboard] NOVÝ REKORD! Ukládám lokálně i na server.");
-            
-            // 1. Uložíme nový rekord do paměti mobilu
             PlayerPrefs.SetInt("LocalHighScore", currentScore);
             PlayerPrefs.Save();
-
-            // 2. Pošleme na server (teď je jedno, že tam je Always Overwrite, protože posíláme rekord)
             LootLockerSDKManager.SubmitScore("", currentScore, leaderboardKey, (sRes) =>
             {
                 if (!sRes.success)
                 {
-                    Debug.LogWarning("[Leaderboard] Skóre se neuložilo na server. Pravděpodobně už máš v tabulce lepší výsledek, nebo došlo k chybě připojení.");
                     ShowOnlyGroup(connectionErrorGroup);
                     return;
                 }
-
                 LootLockerSDKManager.SetPlayerName(playerName, (nRes) =>
                 {
-                    if (!nRes.success)
-                    {
-                        Debug.LogError("[Leaderboard] Skóre bylo uloženo, ale nepodařilo se uložit jméno hráče.");
-                    }
-
                     ShowOnlyGroup(statusGroup);
                 });
             });

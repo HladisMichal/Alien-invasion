@@ -82,6 +82,12 @@ public class PlayerScript : MonoBehaviour
     public float groundCheckWidth = 1f; // šířka boxu (přizpůsob šířce hráče)
     public float groundCheckHeight = 0.05f; // výška boxu (malá, těsně pod nohama)
 
+    // Audio SFX (centrální klipy jsou v SFXManagerScript)
+    [Range(0f, 1f)] public float jumpSfxVolume = 1f;
+    [Range(0f, 1f)] public float dashSfxVolume = 1f;
+    [Range(0f, 1f)] public float fireSfxVolume = 1f;
+    [Range(0f, 1f)] public float hitSfxVolume = 1f;
+
     // Invincibility system
     public bool isInvincible = false;
     private float invincibilityDuration = 0.5f; // doba trvání nesmrtelnosti v sekundách
@@ -121,6 +127,7 @@ public class PlayerScript : MonoBehaviour
         {
             kamera.transform.position = new Vector3(player.transform.position.x, kamera.transform.position.y, kamera.transform.position.z);
         }
+
         animator = player.GetComponent<Animator>();
     }
 
@@ -176,7 +183,7 @@ public class PlayerScript : MonoBehaviour
                 Debug.Log("Konec hry! Hráč byl zničen.");
                 if(GameOverText != null){
                 GameOverText.gameObject.SetActive(true);
-                GameOverText.text = "Konec hry!  Maximální skóre: " + Mathf.Round((float)maxskore);
+                GameOverText.text = "Konec hry! \n Maximální skóre: " + Mathf.Round((float)maxskore);
                 PlayerPrefs.SetInt("LastScore", Mathf.RoundToInt((float)maxskore));
                 PlayerPrefs.Save(); 
                 }
@@ -291,6 +298,8 @@ if (Input.GetButtonDown("Jump") && rb != null && GetIsGrounded() && Mathf.Abs(rb
             if (direction == Vector2.zero)
                 direction = Vector2.right;
 
+            PlaySfx(SFXManagerScript.SfxId.PlayerFire, fireSfxVolume);
+
             GameObject bullet = Instantiate(strelaPrefab, spawnPos, Quaternion.identity);
             Bulletscript bs = bullet.GetComponent<Bulletscript>();
             bs.direction = direction;
@@ -397,7 +406,19 @@ if (Input.GetButtonDown("Jump") && rb != null && GetIsGrounded() && Mathf.Abs(rb
 
      void Jump()
     {
+        PlaySfx(SFXManagerScript.SfxId.Jump, jumpSfxVolume);
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+    }
+
+    void PlaySfx(SFXManagerScript.SfxId sfxId, float volume)
+    {
+        if (SFXManagerScript.Instance != null)
+        {
+            SFXManagerScript.Instance.PlaySFX(sfxId, volume);
+            return;
+        }
+
+        Debug.LogWarning("SFXManagerScript.Instance není dostupný, zvuk se nepřehraje.");
     }
 
 void OnTriggerEnter2D(Collider2D other)
@@ -405,69 +426,9 @@ void OnTriggerEnter2D(Collider2D other)
         if (other.CompareTag("DeathZone"))
         {
             OdeberZivoty();
-            Debug.Log("Hráč spadl do smrtící zóny! Životy: " + zivoty);
-
-            // Pokus o teleport na Tilemapy ve scéně (univerzálně, bez seznamu GameObjectů)
-            Tilemap[] tilemapsToUse = GetRelevantTilemaps();
-            Vector3 safePos = FindNearestSafeTileAcrossTilemaps(player.transform.position, tilemapsToUse);
-            if (safePos != Vector3.zero)
-            {
-                safePos.z = player.transform.position.z; // Zachování Z souřadnice
-                player.transform.position = safePos;
-                Debug.Log("Hráč teleportován na bezpečný tile: " + safePos);
-                return;
-            }
-
-            // Fallback na staré GameObjecty pokud Tilemap není přiřazená nebo nebyl nalezen tile
-            GameObject[] groundObjects = GameObject.FindGameObjectsWithTag("Ground");
-            GameObject[] platformObjects = GameObject.FindGameObjectsWithTag("Platform");
-
-            List<GameObject> allSurfaces = new List<GameObject>();
-            allSurfaces.AddRange(groundObjects);
-            allSurfaces.AddRange(platformObjects);
-
-            if (allSurfaces.Count == 0)
-            {
-                Debug.LogWarning("Nebyl nalezen žádný objekt s tagem 'Ground' nebo 'Platform'!");
-                return;
-            }
-
-            // Najdi nejbližší objekt
-            GameObject nearestSurface = null;
-            float shortestDistance = Mathf.Infinity;
-
-            foreach (GameObject surface in allSurfaces)
-            {
-                float distance = Vector2.Distance(player.transform.position, surface.transform.position);
-                if (distance < shortestDistance)
-                {
-                    shortestDistance = distance;
-                    nearestSurface = surface;
-                }
-            }
-
-            if (nearestSurface != null)
-            {
-                Vector3 safePosition = nearestSurface.transform.position;
-
-                // Zkus získat BoxCollider2D a použij jeho výšku
-                BoxCollider2D col = nearestSurface.GetComponent<BoxCollider2D>();
-                float surfaceHeight = 1f;
-                if (col != null)
-                    surfaceHeight = col.size.y * nearestSurface.transform.localScale.y;
-                else
-                    surfaceHeight = nearestSurface.transform.localScale.y;
-
-                safePosition.y += surfaceHeight / 2f + 1f; // 1f je rezerva nad povrchem
-                safePosition.z = player.transform.position.z; // Zachování Z souřadnice
-                player.transform.position = safePosition;
-
-                Debug.Log("Hráč byl přesunut na bezpečné místo nad 'Ground' nebo 'Platform'.");
-            }
-            else
-            {
-                Debug.LogWarning("Nebyl nalezen žádný vhodný objekt s tagem 'Ground' nebo 'Platform'!");
-            }
+            Vector3 safePos = FindSafeSpawnPosition(player.transform.position);
+            player.transform.position = safePos;
+            return;
         }
         
         if (other.CompareTag("Collectible"))
@@ -478,6 +439,23 @@ void OnTriggerEnter2D(Collider2D other)
                 Destroy(other.gameObject);
             }
         }
+    }
+
+    Vector3 FindSafeSpawnPosition(Vector3 fromPosition)
+    {
+        Tilemap[] tilemapsToUse = GetRelevantTilemaps();
+        if (tilemapsToUse.Length > 0)
+        {
+            Vector3 safePos = FindNearestSafeTileAcrossTilemaps(fromPosition, tilemapsToUse);
+            if (safePos != Vector3.zero)
+            {
+                safePos.z = fromPosition.z;
+                return safePos;
+            }
+        }
+
+        Debug.LogWarning("Nebyl nalezen bezpečný spawn bod!");
+        return fromPosition;
     }
             public void UpdateHearts()
             {
@@ -513,13 +491,13 @@ void OnTriggerEnter2D(Collider2D other)
 
             public void OdeberZivoty()
             {
-                // Kontrola invincibility - pokud je háč nesmrtelný, žádné poskošení
                 if (isInvincible)
                     return;
 
                 zivoty -= 1;
+                PlaySfx(SFXManagerScript.SfxId.PlayerHit, hitSfxVolume);
                 UpdateHearts();
-                StartInvincibility(); // Aktivuj invincibility frames po každém poskošení
+                StartInvincibility();
             }
             public void PridejZivoty()
             {
@@ -546,6 +524,8 @@ void OnTriggerEnter2D(Collider2D other)
                 {
                     animator.SetTrigger("Dash");
                 }
+
+                PlaySfx(SFXManagerScript.SfxId.Dash, dashSfxVolume);
                 
                 float direction = playerSprite != null && playerSprite.flipX ? -1f : 1f;
                 rb.velocity = new Vector2(direction * dashSpeed, rb.velocity.y);
@@ -553,8 +533,8 @@ void OnTriggerEnter2D(Collider2D other)
                 lastDashTime = Time.time;
             }
 
-        void UpdateDash()
-        {
+            void UpdateDash()
+            {
             if (!isDashing || player == null || rb == null) return;
             
             if (Time.time - lastDashTime >= 0.3f)
@@ -562,21 +542,16 @@ void OnTriggerEnter2D(Collider2D other)
                 isDashing = false;
                 rb.velocity = new Vector2(0, rb.velocity.y);
             }
-        }
-
+            }
             void UpdateDashUI(bool isReady, float elapsedSinceLastDash)
             {
                 if (dashIcon == null) return;
-
-                // Přepni sprite podle stavu
                 dashIcon.sprite = isReady ? dashReadySprite : dashCooldownSprite;
-
-                // Vyplň kolečko podle cooldownu (0 hned po dashe, 1 když je ready)
                 float fill = Mathf.Clamp01(elapsedSinceLastDash / dashCooldown);
                 dashIcon.fillAmount = isReady ? 1f : fill;
             }
 
-            // Najde nejbližší bezpečný tile na zadané Tilemapě
+
             Vector3 FindNearestSafeTile(Tilemap tilemap, Vector3 fromPosition)
             {
                 if (tilemap == null) return Vector3.zero;
@@ -612,7 +587,6 @@ void OnTriggerEnter2D(Collider2D other)
                         }
                     }
                 }
-
                 return bestPosition;
             }
 
@@ -638,7 +612,6 @@ void OnTriggerEnter2D(Collider2D other)
                         }
                     }
                 }
-
                 return bestPosition;
             }
 

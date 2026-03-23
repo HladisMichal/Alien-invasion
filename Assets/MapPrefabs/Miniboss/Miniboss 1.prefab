@@ -2825,6 +2825,7 @@ MonoBehaviour:
   laserEndPrefab: {fileID: 5475151717424864890, guid: 00cef29fce4965e4494cc88469507157, type: 3}
   continuousFire: 0
   animator: {fileID: 7860125543552512432}
+  stopFireHitbox: {fileID: 0}
 --- !u!1 &5241966456310548991
 GameObject:
   m_ObjectHideFlags: 0
@@ -2875,6 +2876,7 @@ MonoBehaviour:
   laserEndPrefab: {fileID: 5475151717424864890, guid: 00cef29fce4965e4494cc88469507157, type: 3}
   continuousFire: 0
   animator: {fileID: 7860125543552512432}
+  stopFireHitbox: {fileID: 0}
 --- !u!1 &5855121526338336277
 GameObject:
   m_ObjectHideFlags: 0
@@ -2948,6 +2950,7 @@ MonoBehaviour:
   laserEndPrefab: {fileID: 5475151717424864890, guid: 00cef29fce4965e4494cc88469507157, type: 3}
   continuousFire: 0
   animator: {fileID: 2448604731138095155}
+  stopFireHitbox: {fileID: 0}
 --- !u!1 &5927552639948399663
 GameObject:
   m_ObjectHideFlags: 0
@@ -3029,6 +3032,7 @@ MonoBehaviour:
   laserEndPrefab: {fileID: 5475151717424864890, guid: 00cef29fce4965e4494cc88469507157, type: 3}
   continuousFire: 0
   animator: {fileID: 2448604731138095155}
+  stopFireHitbox: {fileID: 0}
 --- !u!1 &6663607684594112670
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,11 +17,9 @@ public class VolumeSliderHelper : MonoBehaviour
 
     private void OnEnable()
     {
-        // Kontrola: Pokud mixer chybí v inspektoru, zkusíme ho najít u SoundMixerManageru
         if (mixer == null && SoundMixerManager.Instance != null)
         {
-            // Tuto proměnnou si musíme v SoundMixerManageru udělat veřejnou (viz níže)
-            // mixer = SoundMixerManager.Instance.audioMixer; 
+            mixer = SoundMixerManager.Instance.AudioMixer;
         }
 
         if (mixer == null)

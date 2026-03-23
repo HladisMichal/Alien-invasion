@@ -89,8 +89,6 @@ public class SceneManagerscript : MonoBehaviour
         if (pauseMenuUI) pauseMenuUI.SetActive(true);
             isPaused = true;
     }
-
-    // Pokračuje ve hře a skryje menu
     public void ResumeGame()
     {
         Time.timeScale = 1f;

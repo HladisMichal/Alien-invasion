@@ -1,2 +1,17 @@
 fileFormatVersion: 2
 guid: 881370adbd8c3804f920ec57b069d04b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - enemyProjectilePrefab: {instanceID: 0}
+  - ufo_prefab: {instanceID: 0}
+  - bossHealthBar: {instanceID: 0}
+  - bonusHeartPrefab: {instanceID: 0}
+  - skoreBonusANI: {instanceID: 0}
+  - enemyFireSfx: {fileID: 8300000, guid: 8153260b15198a545865614eb773bd27, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

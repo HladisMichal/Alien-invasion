@@ -35,16 +35,10 @@ public class backgroundScript : MonoBehaviour
 
     void Update()
     {
-        // Pokud je kamera locknutá během boss fightu, nehýbej pozadím
         if (PlayerScript.cameraLocked)
             return;
-
-        if (player == null || length == 0f || backgrounds == null || backgrounds.Length == 0)
-            return;
-
+            
         float parallaxX = player.position.x * parallaxSpeed;
-
-        // Posuň každé pozadí podle hráče a jeho indexu
         for (int i = 0; i < backgrounds.Length; i++)
         {
             float bgX = Mathf.Floor((player.position.x * (1 - parallaxSpeed)) / length + i) * length + parallaxX;

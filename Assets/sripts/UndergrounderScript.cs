@@ -62,20 +62,11 @@ public class UndergrounderScript : MonoBehaviour
         if (mainUndergrounderParent == transform)
         {
             currentHealth = isMiniboss ? minibossHealth : 1;
-            if (bossHealthBar == null)
-            {
-                bossHealthBar = FindObjectOfType<Slider>(true);
-            }
             
             if (bossHealthBar != null && isMiniboss)
             {
                 bossHealthBar.value = 1f;
                 bossHealthBar.gameObject.SetActive(true);
-                // Aktivuj i parent Canvas pokud je deaktivovaný
-                if (bossHealthBar.transform.parent != null)
-                {
-                    bossHealthBar.transform.parent.gameObject.SetActive(true);
-                }
             }
         }
     }

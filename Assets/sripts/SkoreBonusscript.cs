@@ -19,5 +19,4 @@ public class SkoreBonusscript : MonoBehaviour
     Destroy(transform.parent.gameObject);
     Destroy(gameObject);
 }
-
 }

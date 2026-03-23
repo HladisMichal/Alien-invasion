@@ -124,7 +124,7 @@ public class MapGeneration : MonoBehaviour
                     // Kontrola, zda má být spawnnut miniboss chunk
                     if (maxScoreSoFar >= nextMilestoneBoss && minibossChunkPrefabs != null && minibossChunkPrefabs.Count > 0)
                     {
-                        // Vyber náhodný miniboss chunk (jiný než poslední)
+
                         int newMinibossIndex;
                         do
                         {
@@ -141,7 +141,7 @@ public class MapGeneration : MonoBehaviour
                         }
                         Debug.Log($"Spawned miniboss chunk: {newChunk.name} (index {newMinibossIndex}) at score {PlayerScript.skore} (max {maxScoreSoFar}).");
                         activeChunks.Add(newChunk);
-                        nextMilestoneBoss += 1000f; // Dalších 1000 skóre pro příští boss
+                        nextMilestoneBoss += 1000f;
                     }
                     else
                     {

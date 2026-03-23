@@ -22,6 +22,10 @@ public class UFOFollowPlayer : MonoBehaviour
     private bool isFiring = false;
     private bool barrierActive = false;
     private Coroutine fireCoroutine; // Pro zastavení coroutine
+    [Range(0f, 1f)] public float ufoSpawnLoopVolume = 1f;
+    [Range(0f, 1f)] public float ufoFireLoopVolume = 1f;
+    private bool spawnLoopRequested = false;
+    private bool fireLoopRequested = false;
 
 
     void Update()
@@ -31,9 +35,26 @@ public class UFOFollowPlayer : MonoBehaviour
         // Pokud je zapnuta kontinuální palba, strilej kazdy frame
         if (continuousFire)
         {
+            StartUfoFireLoop();
             Fire();
             return;
         }
+
+        if (!isFiring)
+        {
+            StopUfoFireLoop();
+        }
+    }
+
+    void OnEnable()
+    {
+        StartUfoSpawnLoop();
+    }
+
+    void OnDisable()
+    {
+        StopUfoFireLoop();
+        StopUfoSpawnLoop();
     }
 
     void Start()
@@ -56,6 +77,7 @@ public class UFOFollowPlayer : MonoBehaviour
     private IEnumerator FireForSeconds(float seconds)
     {
         isFiring = true;
+        StartUfoFireLoop();
         float endTime = Time.time + seconds;
 
         while (Time.time < endTime)
@@ -68,6 +90,7 @@ public class UFOFollowPlayer : MonoBehaviour
         HideLaser();
 
         isFiring = false;
+        fireCoroutine = null;
     }
 
     private void Fire()
@@ -188,6 +211,45 @@ public class UFOFollowPlayer : MonoBehaviour
     {
         if (currentLaserBody != null) currentLaserBody.SetActive(false);
         if (currentLaserEnd != null) currentLaserEnd.SetActive(false);
+        StopUfoFireLoop();
+    }
+
+    private void StartUfoSpawnLoop()
+    {
+        if (spawnLoopRequested) return;
+        if (SFXManagerScript.Instance == null) return;
+
+        SFXManagerScript.Instance.StartLoopSFX(SFXManagerScript.LoopSfxId.UfoSpawn, ufoSpawnLoopVolume);
+        spawnLoopRequested = true;
+    }
+
+    private void StopUfoSpawnLoop()
+    {
+        if (!spawnLoopRequested) return;
+        if (SFXManagerScript.Instance != null)
+        {
+            SFXManagerScript.Instance.StopLoopSFX(SFXManagerScript.LoopSfxId.UfoSpawn);
+        }
+        spawnLoopRequested = false;
+    }
+
+    private void StartUfoFireLoop()
+    {
+        if (fireLoopRequested) return;
+        if (SFXManagerScript.Instance == null) return;
+
+        SFXManagerScript.Instance.StartLoopSFX(SFXManagerScript.LoopSfxId.UfoFire, ufoFireLoopVolume);
+        fireLoopRequested = true;
+    }
+
+    private void StopUfoFireLoop()
+    {
+        if (!fireLoopRequested) return;
+        if (SFXManagerScript.Instance != null)
+        {
+            SFXManagerScript.Instance.StopLoopSFX(SFXManagerScript.LoopSfxId.UfoFire);
+        }
+        fireLoopRequested = false;
     }
 
     // === METODY PRO ANIMATOR A BARIERU ===
