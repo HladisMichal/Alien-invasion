@@ -793,6 +793,7 @@ MonoBehaviour:
   teleportCooldown: 5
   minDistanceFromPlayer: 0.2
   skoreBonusANI: {fileID: 0}
+  enemyFireSfxVolume: 1
 --- !u!1 &2590520133441250184
 GameObject:
   m_ObjectHideFlags: 0
@@ -4030,6 +4031,7 @@ MonoBehaviour:
   teleportCooldown: 5
   minDistanceFromPlayer: 0.2
   skoreBonusANI: {fileID: 0}
+  enemyFireSfxVolume: 1
 --- !u!1 &6775936525687201233
 GameObject:
   m_ObjectHideFlags: 0
@@ -4930,6 +4932,7 @@ MonoBehaviour:
   teleportCooldown: 5
   minDistanceFromPlayer: 0.2
   skoreBonusANI: {fileID: 0}
+  enemyFireSfxVolume: 1
 --- !u!1001 &13470565576758915
 PrefabInstance:
   m_ObjectHideFlags: 0

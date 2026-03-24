@@ -481,6 +481,8 @@ MonoBehaviour:
   continuousFire: 0
   animator: {fileID: 2773762722691252304}
   stopFireHitbox: {fileID: 0}
+  ufoSpawnLoopVolume: 1
+  ufoFireLoopVolume: 1
 --- !u!1 &2084835577722111473
 GameObject:
   m_ObjectHideFlags: 0
@@ -2533,6 +2535,8 @@ MonoBehaviour:
   continuousFire: 0
   animator: {fileID: 2051722670862784191}
   stopFireHitbox: {fileID: 0}
+  ufoSpawnLoopVolume: 1
+  ufoFireLoopVolume: 1
 --- !u!1 &6854032799168171455
 GameObject:
   m_ObjectHideFlags: 0
@@ -2584,6 +2588,8 @@ MonoBehaviour:
   continuousFire: 0
   animator: {fileID: 2773762722691252304}
   stopFireHitbox: {fileID: 0}
+  ufoSpawnLoopVolume: 1
+  ufoFireLoopVolume: 1
 --- !u!1 &6909340153103698671
 GameObject:
   m_ObjectHideFlags: 0
@@ -2776,6 +2782,8 @@ MonoBehaviour:
   continuousFire: 0
   animator: {fileID: 2051722670862784191}
   stopFireHitbox: {fileID: 0}
+  ufoSpawnLoopVolume: 1
+  ufoFireLoopVolume: 1
 --- !u!1 &8276876960452261384
 GameObject:
   m_ObjectHideFlags: 0
@@ -2896,6 +2904,7 @@ MonoBehaviour:
   hranice:
   - {fileID: 1374834767730869884}
   - {fileID: 3969417157299500791}
+  endUI: {fileID: 0}
 --- !u!1 &8428732126966934154
 GameObject:
   m_ObjectHideFlags: 0

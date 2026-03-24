@@ -1172,12 +1172,15 @@ MonoBehaviour:
   minibossHealth: 10
   enemyProjectilePrefab: {fileID: 2332787221070375762, guid: 4e5e831684e8ef44ab68da323aac02d9, type: 3}
   fireRate: 4
+  minibossFireRate: 5
   ufo_prefab: {fileID: 0}
   bossHealthBar: {fileID: 0}
   bonusHeartPrefab: {fileID: 0}
   teleportPositions: []
   teleportCooldown: 5
   minDistanceFromPlayer: 0.2
+  skoreBonusANI: {fileID: 0}
+  enemyFireSfxVolume: 1
 --- !u!1 &6361494219898269955
 GameObject:
   m_ObjectHideFlags: 0

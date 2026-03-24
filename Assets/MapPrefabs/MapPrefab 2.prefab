@@ -1941,6 +1941,7 @@ MonoBehaviour:
   teleportCooldown: 5
   minDistanceFromPlayer: 0.2
   skoreBonusANI: {fileID: 0}
+  enemyFireSfxVolume: 1
 --- !u!1001 &763264716903454457
 PrefabInstance:
   m_ObjectHideFlags: 0
