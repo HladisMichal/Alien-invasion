@@ -5,7 +5,7 @@
 
 ## dosavadní postup
 ***Návod pro zprovoznění:***
-1. stáhnout nejnovější verzi v realeases/assets "Alien.invasion.zip" [nebo přes tento odkaz](https://github.com/HladisMichal/Alien-invasion/releases/download/Testovani/Alien.invasion.zip)
+1. stáhnout nejnovější verzi v realeases/assets "Alien.invasion.zip" [nebo přes tento odkaz](https://github.com/HladisMichal/Alien-invasion/releases/download/Final/Alien.invasion.zip)
 2. extrahovat zip
 3. Spustit soubor "Alien invasion.exe"
 
