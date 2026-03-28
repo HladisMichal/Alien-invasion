@@ -111,7 +111,7 @@ public class MapGeneration : MonoBehaviour
                 invisWall.transform.position = new Vector3(wallX, invisWall.transform.position.y, invisWall.transform.position.z);
         }
 
-        // ENDLESS GENEROVÁNÍ
+        
         if (activeChunks.Count > 0 && player != null)
         {
             GameObject lastChunk = activeChunks[activeChunks.Count - 1];
@@ -192,7 +192,7 @@ public class MapGeneration : MonoBehaviour
     {
         while (true)
         {
-            float delay = Random.Range(5f, 10f);
+            float delay = Random.Range(10f, 20f);
             yield return new WaitForSeconds(delay);
 
             if (ufoPrefab != null && Camera.main != null)

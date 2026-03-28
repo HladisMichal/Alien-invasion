@@ -3,9 +3,12 @@ using UnityEngine;
 using TMPro;
 using LootLocker.Requests; 
 using UnityEngine.SceneManagement;
+using System.Text.RegularExpressions;
 
 public class DeathUIManager : MonoBehaviour
 {
+    private const int MaxNameLength = 14;
+
     [Header("UI Elements")]
     [SerializeField] private GameObject saveStartButton;
     [SerializeField] private GameObject inputGroup;
@@ -21,6 +24,11 @@ public class DeathUIManager : MonoBehaviour
 
     private void Start()
     {
+        if (nameInputField != null)
+        {
+            nameInputField.characterLimit = MaxNameLength;
+        }
+
         // Start session zůstává stejný, aby hráč mohl být v tabulce
         LootLockerSDKManager.StartGuestSession((response) =>
         {
@@ -65,11 +73,16 @@ public class DeathUIManager : MonoBehaviour
 
     public void OnClickConfirmSave()
     {
-        string playerName = nameInputField.text;
-        if (string.IsNullOrEmpty(playerName))
+        string playerName = nameInputField != null ? SanitizePlayerName(nameInputField.text) : string.Empty;
+        if (string.IsNullOrWhiteSpace(playerName))
         {
-            Debug.LogWarning("[Leaderboard] Jméno je prázdné, ukládání bylo zrušeno.");
+            Debug.LogWarning("[Leaderboard] Jméno může obsahovat jen písmena anglické abecedy, čísla a mezery (max 14 znaků).");
             return;
+        }
+
+        if (nameInputField != null)
+        {
+            nameInputField.text = playerName;
         }
 
         if (!isLeaderboardSessionReady)
@@ -138,8 +151,40 @@ public class DeathUIManager : MonoBehaviour
         }
     }
 
+    private string SanitizePlayerName(string rawName)
+    {
+        if (string.IsNullOrEmpty(rawName))
+        {
+            return string.Empty;
+        }
+
+        string lettersNumbersAndSpacesOnly = Regex.Replace(rawName, "[^A-Za-z0-9 ]", string.Empty);
+        string normalizedSpaces = Regex.Replace(lettersNumbersAndSpacesOnly, "\\s+", " ").Trim();
+
+        if (normalizedSpaces.Length > MaxNameLength)
+        {
+            normalizedSpaces = normalizedSpaces.Substring(0, MaxNameLength).TrimEnd();
+        }
+
+        return normalizedSpaces;
+    }
+
     public void OnClickGoToStats()
     {
+        GameObject gameMusic = GameObject.Find("MusicManagerGame");
+        GameObject menuMusic = GameObject.Find("MusicManagerMenu");
+
+        if (gameMusic != null && menuMusic == null)
+        {
+            MusicManager.Instance = null;
+            Destroy(gameMusic);
+            Time.timeScale = 1f;
+            SceneManagerscript.PendingSceneAfterMenu = "Statistic";
+            SceneManager.LoadScene("Menu");
+            return;
+        }
+
+        Time.timeScale = 1f;
         SceneManager.LoadScene("Statistic");
     }
 }

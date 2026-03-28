@@ -3,8 +3,20 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagerscript : MonoBehaviour
 {
-        public GameObject pauseMenuUI; // Nastav v Inspectoru na panel s pauzovacím menu
+    public static string PendingSceneAfterMenu = "";
+    public GameObject pauseMenuUI; // Nastav v Inspectoru na panel s pauzovacím menu
     private bool isPaused = false;
+
+    void Start()
+    {
+        if (SceneManager.GetActiveScene().name == "Menu" && !string.IsNullOrEmpty(PendingSceneAfterMenu))
+        {
+            string targetScene = PendingSceneAfterMenu;
+            PendingSceneAfterMenu = "";
+            Time.timeScale = 1f;
+            SceneManager.LoadScene(targetScene);
+        }
+    }
 
     void Update()
     {
@@ -68,7 +80,24 @@ public class SceneManagerscript : MonoBehaviour
 {
     // Pokud jdeme do statistik ze hry, smažeme herní hudbu
     GameObject gameMusic = GameObject.Find("MusicManagerGame");
-    if (gameMusic != null) Destroy(gameMusic);
+    GameObject menuMusic = GameObject.Find("MusicManagerMenu");
+
+    // Ze hry do statistik: pokud menu hudba neběží, jednorázově projdeme přes Menu.
+    if (gameMusic != null && menuMusic == null)
+    {
+        MusicManager.Instance = null;
+        Destroy(gameMusic);
+        Time.timeScale = 1f;
+        PendingSceneAfterMenu = "Statistic";
+        SceneManager.LoadScene("Menu");
+        return;
+    }
+
+    if (gameMusic != null)
+    {
+        MusicManager.Instance = null;
+        Destroy(gameMusic);
+    }
 
     Time.timeScale = 1f;
     SceneManager.LoadScene("Statistic");

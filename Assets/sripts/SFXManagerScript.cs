@@ -130,6 +130,19 @@ public class SFXManagerScript : MonoBehaviour
 		}
 	}
 
+	public void StopAllSfxImmediate()
+	{
+		EnsureAudioSource();
+		isSfxPaused = false;
+
+		if (sfxSource != null)
+		{
+			sfxSource.Stop();
+		}
+
+		StopAllLoopSourcesImmediate();
+	}
+
 	private AudioClip GetClip(SfxId id)
 	{
 		switch (id)

@@ -117,11 +117,15 @@ public class PlayerScript : MonoBehaviour
                 rb.freezeRotation = true;
             }
             akceSkore = 0;
+            skore = 0;
         }
         else
         {
             Debug.LogError("Není připojený GameObject player!");
         }
+
+        // Maximum jen pro aktuální run (nesmí se načítat historické lokální maximum).
+        maxskore = 0;
 
         if (player != null && kamera != null)
         {
@@ -191,6 +195,10 @@ public class PlayerScript : MonoBehaviour
                 {
                     deathUI.SetActive(true);
                 }
+                if (SFXManagerScript.Instance != null)
+                {
+                    SFXManagerScript.Instance.StopAllSfxImmediate();
+                }
                 Time.timeScale = 0; 
                 Destroy(player); 
                 
@@ -198,14 +206,10 @@ public class PlayerScript : MonoBehaviour
             }
             pohyboveSkore = player.transform.position.x - 341;
             skore = pohyboveSkore + akceSkore;
-            if (skoreText != null)
-            {
-                skoreText.text = Mathf.Round((float)skore).ToString();
-            }
             if (skore > maxskore)
-        {
-            maxskore = skore;
-        }
+            {
+                maxskore = skore;
+            }
             if (deathZone != null)
         {
             Vector3 pos = deathZone.transform.position;
@@ -213,7 +217,7 @@ public class PlayerScript : MonoBehaviour
             deathZone.transform.position = pos;
         }
         if(skoreText != null){
-                skoreText.text = Mathf.Round((float)skore).ToString();
+                skoreText.text = Mathf.Round((float)maxskore).ToString();
         }
 
 

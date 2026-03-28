@@ -91,11 +91,7 @@ public class EnemyScript : MonoBehaviour
         }
 
         
-        if (player != null)
-        {
-            PlayerScript.skore = skore;
-            float distance = Vector2.Distance(transform.position, player.position);
-        }
+        // Skóre řídí PlayerScript; tady ho nepřepisujeme.
     }
 
     void OnBecameVisible()
