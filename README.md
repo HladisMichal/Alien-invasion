@@ -3,7 +3,7 @@
 **Vedoucí:** Mgr. Karel Jindra  
 **Oponent:** Ing. Pavel Knotek 
 
-## dosavadní postup
+## Stažení hry
 ***Návod pro zprovoznění:***
 1. stáhnout nejnovější verzi v realeases/assets "Alien.invasion.zip" [nebo přes tento odkaz](https://github.com/HladisMichal/Alien-invasion/releases/download/Final/Alien.invasion.zip)
 2. extrahovat zip
